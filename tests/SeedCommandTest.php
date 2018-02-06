@@ -8,21 +8,17 @@
 
 namespace Tests\Units;
 
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\DriverManager;
 use sonrac\SimpleSeed\InvalidSeedClassException;
 use sonrac\SimpleSeed\SeedClassNotFound;
 use sonrac\SimpleSeed\SeedCommand;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
 
 /**
- * Class SeedControllerTest
+ * Class SeedCommandTest
  */
-class SeedControllerTest extends TestCase
+class SeedCommandTest extends TestCase
 {
     /**
      * @var \sonrac\SimpleSeed\SeedCommand
@@ -39,6 +35,22 @@ class SeedControllerTest extends TestCase
         parent::setUp();
 
         $this->seedCommand = new SeedCommand(null, sonrac_getDoctrineConnection());
+    }
+
+    /**
+     * Test empty connection exception
+     *
+     * @throws \Exception
+     * @author Sergii Donii <s.donii@infomir.com>
+     */
+    public function testEmptyConnectionException() {
+        if (method_exists($this, 'setExpectedException')) {
+            $this->setExpectedException(\Exception::class);
+        } else {
+            $this->expectException(\Exception::class);
+        }
+
+        new SeedCommand(null, null);
     }
 
     /**

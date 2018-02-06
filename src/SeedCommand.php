@@ -22,19 +22,25 @@ class SeedCommand extends Command
      *
      * @var \Doctrine\DBAL\Connection
      */
-    protected $connection = null;
+    protected $connection;
 
     /**
      * SeedCommand constructor.
      *
      * @param null|string               $name
      * @param \Doctrine\DBAL\Connection $connection
+     *
+     * @throws \Exception
      */
     public function __construct($name = null, $connection)
     {
         parent::__construct($name);
 
         $this->connection = $connection;
+
+        if (empty($this->connection)) {
+            throw new \Exception('Connection does not set');
+        }
     }
 
     /** {@inheritdoc} */
