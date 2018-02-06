@@ -10,31 +10,29 @@ namespace sonrac\SimpleSeed;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-
 /**
- * Class SimpleSeedWithCheckExists
+ * Class SimpleSeedWithCheckExists.
  *
- * @package sonrac\SimpleSeed
  * @author  Sergii Donii <s.donii@infomir.com>
  */
 abstract class SimpleSeedWithCheckExists extends SimpleSeed
 {
     /**
-     * Field name for count aggregation function
+     * Field name for count aggregation function.
      *
      * @var string
      */
     protected $countField = '*';
 
     /**
-     * Data which was been inserted
+     * Data which was been inserted.
      *
      * @var array
      */
     private $insertedData = [];
 
     /**
-     * Data which was been skipped
+     * Data which was been skipped.
      *
      * @var array
      */
@@ -57,7 +55,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
 
             if (is_array($whereData) && count($whereData)) {
                 $builder = $connection->createQueryBuilder()
-                        ->select(['count(' . $this->countField . ')'])
+                        ->select(['count('.$this->countField.')'])
                         ->from($this->getTable(), $this->getTable())
                         ->where($this->prepeareWhere($whereData));
 
@@ -80,7 +78,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
     }
 
     /**
-     * Get inserted data
+     * Get inserted data.
      *
      * @return array
      */
@@ -90,7 +88,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
     }
 
     /**
-     * Get skipped data
+     * Get skipped data.
      *
      * @return array
      */
@@ -100,20 +98,22 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
     }
 
     /**
-     * Get where for check exists data
+     * Get where for check exists data.
      *
      * @param array $data
      *
      * @return array
+     *
      * @author Sergii Donii <s.donii@infomir.com>
      */
     abstract protected function getWhereForRow($data);
 
-    protected function prepeareWhere($data) {
+    protected function prepeareWhere($data)
+    {
         $where = '';
 
         foreach ($data as $name => $value) {
-            $where .= (strlen($where) ? ' AND ' : '') . " `$name` = :$name";
+            $where .= (strlen($where) ? ' AND ' : '')." `$name` = :$name";
         }
 
         return $where;

@@ -12,24 +12,22 @@ use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 use sonrac\SimpleSeed\SimpleSeed;
 
-
 /**
- * Class SimpleSeedTest
+ * Class SimpleSeedTest.
  *
- * @package Tests
  * @author  Sergii Donii <s.donii@infomir.com>
  */
 class SimpleSeedTest extends TestCase
 {
     /**
-     * Doctrine Connection
+     * Doctrine Connection.
      *
      * @var null|\Doctrine\DBAL\Connection
      */
     private $connection = null;
 
     /**
-     * Test insert data in table
+     * Test insert data in table.
      *
      * @throws \Exception
      *
@@ -69,7 +67,7 @@ class SimpleSeedTest extends TestCase
     }
 
     /**
-     * Check table exists
+     * Check table exists.
      *
      * @author Sergii Donii <s.donii@infomir.com>
      */
@@ -79,7 +77,7 @@ class SimpleSeedTest extends TestCase
     }
 
     /**
-     * Create table
+     * Create table.
      *
      * @throws
      *
@@ -103,7 +101,7 @@ class SimpleSeedTest extends TestCase
 class Seed extends SimpleSeed
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getTable()
     {
@@ -111,7 +109,7 @@ class Seed extends SimpleSeed
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getData()
     {
@@ -126,5 +124,4 @@ class Seed extends SimpleSeed
             ],
         ];
     }
-
 }
