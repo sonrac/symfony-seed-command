@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
 
 /**
- * Class SeedCommandTest
+ * Class SeedCommandTest.
  */
 class SeedCommandTest extends TestCase
 {
@@ -41,9 +41,11 @@ class SeedCommandTest extends TestCase
      * Test empty connection exception.
      *
      * @throws \Exception
+     *
      * @author Sergii Donii <s.donii@infomir.com>
      */
-    public function testEmptyConnectionException() {
+    public function testEmptyConnectionException()
+    {
         if (method_exists($this, 'setExpectedException')) {
             $this->setExpectedException(\Exception::class);
         } else {
