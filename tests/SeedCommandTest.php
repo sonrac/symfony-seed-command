@@ -10,7 +10,7 @@ namespace Tests\Units;
 
 use PHPUnit\Framework\TestCase;
 use sonrac\SimpleSeed\InvalidSeedClassException;
-use sonrac\SimpleSeed\SeedClassNotFound;
+use sonrac\SimpleSeed\SeedClassNotFoundException;
 use sonrac\SimpleSeed\SeedCommand;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
@@ -71,9 +71,9 @@ class SeedCommandTest extends TestCase
         $output = $this->getMockBuilder(Output::class)->getMock();
 
         if (method_exists($this, 'setExpectedException')) {
-            $this->setExpectedException(SeedClassNotFound::class);
+            $this->setExpectedException(SeedClassNotFoundException::class);
         } else {
-            $this->expectException(SeedClassNotFound::class);
+            $this->expectException(SeedClassNotFoundException::class);
         }
 
         $this->seedCommand->run($input, $output);

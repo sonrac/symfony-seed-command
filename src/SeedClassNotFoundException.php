@@ -8,11 +8,11 @@
 namespace sonrac\SimpleSeed;
 
 /**
- * Class SeedClassNotFound.
+ * Class SeedClassNotFoundException.
  *
  * @author  Sergii Donii <s.donii@infomir.com>
  */
-class SeedClassNotFound extends \Exception
+class SeedClassNotFoundException extends \Exception
 {
     /**
      * {@inheritdoc}

@@ -13,26 +13,46 @@
 [![Daily Downloads](https://poser.pugx.org/sonrac/symfony-seed-command/d/daily)](https://packagist.org/packages/sonrac/symfony-seed-command)
 [![composer.lock](https://poser.pugx.org/sonrac/symfony-seed-command/composerlock)](https://packagist.org/packages/sonrac/symfony-seed-command)
 
-# Install
+## Install
 
 ```bash
 composer require sonrac/symfony-seed-command
 ```
 
-# Introduction
+## Introduction
 
-Пакет предназначен для заполнения БД данными в обход миграций.
+The package is designed to fill the database with data bypassing migrations.
 
-# Usages for silex
+## Usages for silex or symfony 
 
-Для использования 
+Add to console application command `sonrac\SeedCommand`, as example, for silex:
 
-# Usages for symfony
+```php
 
-# Usages with php < 5.6 & > 5.3
+$app->add(new sonrac\SimpleSeed\SeedCommand(null, $app->get('db')));
 
-Install version 5.5.9:
-
-```bash
-composer require sonrac/symfony-seed-command
 ```
+
+## Create seed:
+
+Seed class must be implement `sonrac\SimpleSeed\SeedInterface`
+
+## Predefined seed classes
+
+* `sonrac\SimpleSeed\SimpleSeed`
+
+Simple seed for data insert. Define `getTable` for table name and `getData` 
+for get data.
+
+Insert would be run automatically
+
+* `sonrac\SimpleSeed\SimpleSeedWithCheckExists`
+
+Seed with check exists inserted data before insert. 
+Define `getTable` for table name and `getData` 
+for get data. Also, define `getWhereForRow` which is where filter for select data 
+before insert
+
+Insert would be run automatically
+
+

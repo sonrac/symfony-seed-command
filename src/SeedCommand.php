@@ -71,7 +71,7 @@ class SeedCommand extends Command
     private function checkSeedClass($class)
     {
         if (empty($class) || !class_exists($class)) {
-            throw new SeedClassNotFound();
+            throw new SeedClassNotFoundException();
         }
 
         $reflection = new \ReflectionClass($class);
