@@ -1,0 +1,34 @@
+build:
+  environment:
+        php:
+            version: 7.1
+  dependencies:
+          before:
+              - composer install --prefer-source
+  tests:
+    override:
+      -
+        command: 'bash run-tests.sh'
+        coverage:
+          file: 'tests/_output/coverage.xml'
+          format: clover
+imports:
+    - php
+checks:
+  php:
+    code_rating: true
+    duplication: true
+filter:
+  excluded_paths:
+    - vendor/*
+    - tests/*
+tools:
+    php_sim: false
+    php_cpd: false
+    php_pdepend: true
+    php_analyzer: true
+    php_changetracking: true
+filter:
+    excluded_paths:
+        - tests/*
+        - vendor/*
