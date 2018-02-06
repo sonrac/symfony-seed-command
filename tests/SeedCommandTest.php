@@ -3,15 +3,15 @@
  * Created by PhpStorm.
  * User: sonrac
  * Date: 1/25/18
- * Time: 8:33 PM
+ * Time: 8:33 PM.
  */
 
 namespace Tests\Units;
 
+use PHPUnit\Framework\TestCase;
 use sonrac\SimpleSeed\InvalidSeedClassException;
 use sonrac\SimpleSeed\SeedClassNotFound;
 use sonrac\SimpleSeed\SeedCommand;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\Output;
 
@@ -38,7 +38,7 @@ class SeedCommandTest extends TestCase
     }
 
     /**
-     * Test empty connection exception
+     * Test empty connection exception.
      *
      * @throws \Exception
      * @author Sergii Donii <s.donii@infomir.com>
@@ -54,11 +54,12 @@ class SeedCommandTest extends TestCase
     }
 
     /**
-     * Test error class exists
+     * Test error class exists.
      *
      * @throws \Exception
      */
-    public function testErrorClass() {
+    public function testErrorClass()
+    {
         $input = $this->getMockBuilder(Input::class);
         $input = $input->setMethods(['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption'])->getMock();
         $input->expects($this->any())
@@ -73,17 +74,16 @@ class SeedCommandTest extends TestCase
             $this->expectException(SeedClassNotFound::class);
         }
 
-
         $this->seedCommand->run($input, $output);
     }
 
     /**
-     * Test error class exists
+     * Test error class exists.
      *
      * @throws \Exception
      */
-    public function testErrorClassDoesNotImplementInterface() {
-
+    public function testErrorClassDoesNotImplementInterface()
+    {
         $input = $this->getMockBuilder(Input::class);
         $input = $input->setMethods(['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption'])->getMock();
         $input->expects($this->any())
@@ -102,11 +102,12 @@ class SeedCommandTest extends TestCase
     }
 
     /**
-     * Test seed run success
+     * Test seed run success.
      *
      * @throws \Exception
      */
-    public function testSeedSuccess() {
+    public function testSeedSuccess()
+    {
         $input = $this->getMockBuilder(Input::class);
         $input = $input->setMethods(['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption'])->getMock();
         $input->expects($this->any())

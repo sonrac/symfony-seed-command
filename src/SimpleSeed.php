@@ -5,12 +5,10 @@ namespace sonrac\SimpleSeed;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-
 /**
  * Class SimpleSeed
- * Simple seed command runner
+ * Simple seed command runner.
  *
- * @package sonrac\SimpleSeed
  * @author  Sergii Donii <s.donii@infomir.com>
  */
 abstract class SimpleSeed implements SeedInterface
@@ -30,7 +28,7 @@ abstract class SimpleSeed implements SeedInterface
     }
 
     /**
-     * Get table for insert
+     * Get table for insert.
      *
      * @return string
      *
@@ -51,9 +49,10 @@ abstract class SimpleSeed implements SeedInterface
      *      [
      *          'fieldN' => 'valueN',
      *      ]
-     * ]
+     * ].
      *
      * @return mixed
+     *
      * @author Sergii Donii <s.donii@infomir.com>
      */
     abstract protected function getData();

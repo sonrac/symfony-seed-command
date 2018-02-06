@@ -10,15 +10,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class SeedCommand
- * Seed command
+ * Seed command.
  *
- * @package sonrac\SimpleSeed
  * @author  Sergii Donii <s.donii@infomir.com>
  */
 class SeedCommand extends Command
 {
     /**
-     * Database connection
+     * Database connection.
      *
      * @var \Doctrine\DBAL\Connection
      */
@@ -32,7 +31,7 @@ class SeedCommand extends Command
      *
      * @throws \Exception
      */
-    public function __construct($name = null, $connection)
+    public function __construct($name, $connection)
     {
         parent::__construct($name);
 
@@ -62,7 +61,7 @@ class SeedCommand extends Command
     }
 
     /**
-     * Check correct seed class
+     * Check correct seed class.
      *
      * @param string $class
      *
@@ -80,6 +79,5 @@ class SeedCommand extends Command
         if (!$reflection->implementsInterface(SeedInterface::class)) {
             throw new InvalidSeedClassException();
         }
-
     }
 }

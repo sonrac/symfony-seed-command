@@ -7,15 +7,14 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Interface SeedInterface
- * Interface for seed command
+ * Interface for seed command.
  *
- * @package sonrac\SimpleSeed
  * @author  Sergii Donii <s.donii@infomir.com>
  */
 interface SeedInterface
 {
     /**
-     * Run seed command
+     * Run seed command.
      *
      * @param \Doctrine\DBAL\Query\QueryBuilder $builder
      * @param \Doctrine\DBAL\Connection         $connection
