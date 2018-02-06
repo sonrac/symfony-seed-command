@@ -8,9 +8,9 @@ build:
   tests:
     override:
       -
-        command: 'bash run-tests.sh'
+        command: './vendor/bin/phpunit --coverage-clover coverage.xml'
         coverage:
-          file: 'tests/_output/coverage.xml'
+          file: 'coverage.xml'
           format: clover
 imports:
     - php
