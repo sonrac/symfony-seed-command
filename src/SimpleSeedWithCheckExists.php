@@ -41,7 +41,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
     /**
      * {@inheritdoc}
      */
-    public function run(QueryBuilder $builder, Connection $connection = null)
+    public function run(QueryBuilder $builder, Connection $connection)
     {
         $this->insertedData = [];
         $this->skippedData = [];

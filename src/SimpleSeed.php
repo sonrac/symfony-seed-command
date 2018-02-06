@@ -16,7 +16,7 @@ abstract class SimpleSeed implements SeedInterface
     /**
      * {@inheritdoc}
      */
-    public function run(QueryBuilder $builder, Connection $connection = null)
+    public function run(QueryBuilder $builder, Connection $connection)
     {
         $data = $this->getData();
 

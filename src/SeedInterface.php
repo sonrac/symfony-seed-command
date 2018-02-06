@@ -21,5 +21,5 @@ interface SeedInterface
      *
      * @return mixed
      */
-    public function run(QueryBuilder $builder, Connection $connection = null);
+    public function run(QueryBuilder $builder, Connection $connection);
 }
