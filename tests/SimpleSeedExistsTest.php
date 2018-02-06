@@ -13,22 +13,21 @@ use PHPUnit\Framework\TestCase;
 use sonrac\SimpleSeed\SimpleSeedWithCheckExists;
 
 /**
- * Class SimpleSeedExistsTest
+ * Class SimpleSeedExistsTest.
  *
- * @package Tests
  * @author  Sergii Donii <s.donii@infomir.com>
  */
 class SimpleSeedExistsTest extends TestCase
 {
     /**
-     * Doctrine Connection
+     * Doctrine Connection.
      *
      * @var null|\Doctrine\DBAL\Connection
      */
     private $connection = null;
 
     /**
-     * Test insert data in table
+     * Test insert data in table.
      *
      * @throws \Exception
      *
@@ -47,7 +46,7 @@ class SimpleSeedExistsTest extends TestCase
     }
 
     /**
-     * Test insert data in table
+     * Test insert data in table.
      *
      * @depends testInsert
      *
@@ -96,7 +95,7 @@ class SimpleSeedExistsTest extends TestCase
     }
 
     /**
-     * Check table exists
+     * Check table exists.
      *
      * @author Sergii Donii <s.donii@infomir.com>
      */
@@ -106,7 +105,7 @@ class SimpleSeedExistsTest extends TestCase
     }
 
     /**
-     * Create table
+     * Create table.
      *
      * @throws
      *
@@ -127,12 +126,14 @@ class SimpleSeedExistsTest extends TestCase
     }
 
     /**
-     * Get data for seed
+     * Get data for seed.
      *
      * @return array
+     *
      * @author Sergii Donii <s.donii@infomir.com>
      */
-    public static function getData() {
+    public static function getData()
+    {
         return [
             [
                 'username' => 'jane',
@@ -149,7 +150,7 @@ class SimpleSeedExistsTest extends TestCase
 class SeedExists extends SimpleSeedWithCheckExists
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getTable()
     {
@@ -157,7 +158,7 @@ class SeedExists extends SimpleSeedWithCheckExists
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getData()
     {
@@ -165,12 +166,10 @@ class SeedExists extends SimpleSeedWithCheckExists
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getWhereForRow($data)
     {
         return ['username' => $data['username']];
     }
-
-
 }

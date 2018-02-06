@@ -3,9 +3,8 @@
 namespace sonrac\SimpleSeed;
 
 /**
- * Class InvalidSeedClassException
+ * Class InvalidSeedClassException.
  *
- * @package sonrac\SimpleSeed
  * @author  Sergii Donii <s.donii@infomir.com>
  */
 class InvalidSeedClassException extends \Exception
