@@ -1,30 +1,31 @@
 {
-    "name": "sonrac/symfony-seed-command",
-    "description": "Symfony simple seed command",
-    "type": "library",
-    "require": {
-        "symfony/console": ">=2.3",
-        "doctrine/dbal": ">=2.2.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": ">=4.8"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Sergii Donii",
-            "email": "doniysa@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "sonrac\\SimpleSeed\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests"
-        }
-    },
-    "minimum-stability": "stable"
+  "name": "sonrac/symfony-seed-command",
+  "description": "Symfony simple seed command",
+  "type": "library",
+  "require": {
+    "php": ">=5.3",
+    "symfony/console": ">=2.3",
+    "doctrine/dbal": ">=2.2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=4.8"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergii Donii",
+      "email": "doniysa@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "sonrac\\SimpleSeed\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests"
+    }
+  },
+  "minimum-stability": "stable"
 }
