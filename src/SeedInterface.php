@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sonrac
- * Date: 1/25/18
- * Time: 7:49 PM
- */
 
 namespace sonrac\SimpleSeed;
-
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;

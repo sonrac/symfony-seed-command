@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sonrac
- * Date: 1/25/18
- * Time: 7:44 PM
- */
 
 namespace sonrac\SimpleSeed;
 
@@ -14,6 +8,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class SeedCommand
+ * Seed command
+ *
+ * @package sonrac\SimpleSeed
+ * @author  Sergii Donii <s.donii@infomir.com>
+ */
 class SeedCommand extends Command
 {
     /**
@@ -26,14 +27,14 @@ class SeedCommand extends Command
     /**
      * SeedCommand constructor.
      *
-     * @param null              $name
-     * @param Silex\Application $app
+     * @param null|string               $name
+     * @param \Doctrine\DBAL\Connection $connection
      */
-    public function __construct($name = null, $app)
+    public function __construct($name = null, $connection)
     {
         parent::__construct($name);
 
-        $this->connection = $app['db'];
+        $this->connection = $connection;
     }
 
     /** {@inheritdoc} */
@@ -65,13 +66,13 @@ class SeedCommand extends Command
     private function checkSeedClass($class)
     {
         if (empty($class) || !class_exists($class)) {
-            throw new InvalidOptionException('Seed class does not exists');
+            throw new SeedClassNotFound();
         }
 
         $reflection = new \ReflectionClass($class);
 
         if (!$reflection->implementsInterface(SeedInterface::class)) {
-            throw new \Exception('Seed class must be implement Command\SeedInterface');
+            throw new InvalidSeedClassException();
         }
 
     }

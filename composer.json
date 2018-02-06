@@ -16,5 +16,15 @@
             "email": "s.donii@infomir.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "sonrac\\SimpleSeed\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
     "minimum-stability": "stable"
 }

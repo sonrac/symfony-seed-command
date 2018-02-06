@@ -11,14 +11,11 @@
     processIsolation            = "false"
     stopOnFailure               = "false"
     syntaxCheck                 = "false"
-    bootstrap                   = "vendor/autoload.php">
+    bootstrap                   = "tests/bootstrap.php">
 
     <testsuites>
-        <testsuite name="Functional Application Tests">
-            <directory>tests/functionals</directory>
-        </testsuite>
         <testsuite name="Unit Application Tests">
-            <directory>tests/units</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 

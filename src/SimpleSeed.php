@@ -1,10 +1,4 @@
-
 <?php
-/**
- * Created by PhpStorm.
- *
- * @author Sergii Donii <s.donii@infomir.com>
- */
 
 namespace sonrac\SimpleSeed;
 
@@ -14,6 +8,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Class SimpleSeed
+ * Simple seed command runner
  *
  * @package sonrac\SimpleSeed
  * @author  Sergii Donii <s.donii@infomir.com>
@@ -21,13 +16,27 @@ use Doctrine\DBAL\Query\QueryBuilder;
 abstract class SimpleSeed implements SeedInterface
 {
     /**
+     * {@inheritdoc}
+     */
+    public function run(QueryBuilder $builder, Connection $connection = null)
+    {
+        $data = $this->getData();
+
+        foreach ($data as $datum) {
+            $connection->insert($this->getTable(), $datum);
+        }
+
+        return true;
+    }
+
+    /**
      * Get table for insert
      *
      * @return string
      *
      * @author Sergii Donii <s.donii@infomir.com>
      */
-    abstract public function getTable();
+    abstract protected function getTable();
 
     /**
      * Get data for table in format:
@@ -47,17 +56,5 @@ abstract class SimpleSeed implements SeedInterface
      * @return mixed
      * @author Sergii Donii <s.donii@infomir.com>
      */
-    abstract public function getData();
-
-    /**
-     * {@inheritdoc}
-     */
-    public function run(QueryBuilder $builder, Connection $connection = null)
-    {
-        $data = $this->getData();
-
-        foreach ($data as $datum) {
-            $connection->insert($this->getTable(), $datum);
-        }
-    }
+    abstract protected function getData();
 }
