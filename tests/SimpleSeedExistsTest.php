@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * @author Sergii Donii <s.donii@infomir.com>
+ * @author Sergii Donii <doniysa@gmail.com>
  */
 
 namespace Tests;
@@ -15,7 +15,7 @@ use sonrac\SimpleSeed\SimpleSeedWithCheckExists;
 /**
  * Class SimpleSeedExistsTest.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 class SimpleSeedExistsTest extends TestCase
 {
@@ -31,7 +31,7 @@ class SimpleSeedExistsTest extends TestCase
      *
      * @throws \Exception
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     public function testInsert()
     {
@@ -52,7 +52,7 @@ class SimpleSeedExistsTest extends TestCase
      *
      * @throws \Exception
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     public function testInsertExists()
     {
@@ -97,7 +97,7 @@ class SimpleSeedExistsTest extends TestCase
     /**
      * Check table exists.
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     private function checkTableExists()
     {
@@ -109,7 +109,7 @@ class SimpleSeedExistsTest extends TestCase
      *
      * @throws
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     private function createTable()
     {
@@ -130,7 +130,7 @@ class SimpleSeedExistsTest extends TestCase
      *
      * @return array
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     public static function getData()
     {

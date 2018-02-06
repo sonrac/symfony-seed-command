@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class SeedCommand
  * Seed command.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 class SeedCommand extends Command
 {

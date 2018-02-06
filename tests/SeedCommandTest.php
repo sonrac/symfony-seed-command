@@ -42,7 +42,7 @@ class SeedCommandTest extends TestCase
      *
      * @throws \Exception
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     public function testEmptyConnectionException()
     {

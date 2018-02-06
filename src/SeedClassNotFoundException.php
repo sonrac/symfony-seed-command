@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * @author Sergii Donii <s.donii@infomir.com>
+ * @author Sergii Donii <doniysa@gmail.com>
  */
 
 namespace sonrac\SimpleSeed;
@@ -10,7 +10,7 @@ namespace sonrac\SimpleSeed;
 /**
  * Class SeedClassNotFoundException.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 class SeedClassNotFoundException extends \Exception
 {

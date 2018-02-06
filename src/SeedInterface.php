@@ -9,7 +9,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
  * Interface SeedInterface
  * Interface for seed command.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 interface SeedInterface
 {

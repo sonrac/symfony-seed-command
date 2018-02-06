@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * @author Sergii Donii <s.donii@infomir.com>
+ * @author Sergii Donii <doniysa@gmail.com>
  */
 
 namespace Tests;
@@ -15,7 +15,7 @@ use sonrac\SimpleSeed\SimpleSeed;
 /**
  * Class SimpleSeedTest.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 class SimpleSeedTest extends TestCase
 {
@@ -31,7 +31,7 @@ class SimpleSeedTest extends TestCase
      *
      * @throws \Exception
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     public function testInsert()
     {
@@ -69,7 +69,7 @@ class SimpleSeedTest extends TestCase
     /**
      * Check table exists.
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     private function checkTableExists()
     {
@@ -81,7 +81,7 @@ class SimpleSeedTest extends TestCase
      *
      * @throws
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     private function createTable()
     {

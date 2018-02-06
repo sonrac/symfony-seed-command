@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * @author Sergii Donii <s.donii@infomir.com>
+ * @author Sergii Donii <doniysa@gmail.com>
  */
 require __DIR__.'/../vendor/autoload.php';
 
@@ -16,7 +16,7 @@ use Doctrine\DBAL\DriverManager;
  *
  * @return \Doctrine\DBAL\Connection
  *
- * @author Sergii Donii <s.donii@infomir.com>
+ * @author Sergii Donii <doniysa@gmail.com>
  */
 function sonrac_getDoctrineConnection()
 {

@@ -5,7 +5,7 @@ namespace sonrac\SimpleSeed;
 /**
  * Class InvalidSeedClassException.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 class InvalidSeedClassException extends \Exception
 {

@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  *
- * @author Sergii Donii <s.donii@infomir.com>
+ * @author Sergii Donii <doniysa@gmail.com>
  */
 
 namespace sonrac\SimpleSeed;
@@ -13,7 +13,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 /**
  * Class SimpleSeedWithCheckExists.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 abstract class SimpleSeedWithCheckExists extends SimpleSeed
 {
@@ -104,7 +104,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
      *
      * @return array
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     abstract protected function getWhereForRow($data);
 

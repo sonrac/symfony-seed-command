@@ -9,7 +9,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
  * Class SimpleSeed
  * Simple seed command runner.
  *
- * @author  Sergii Donii <s.donii@infomir.com>
+ * @author  Sergii Donii <doniysa@gmail.com>
  */
 abstract class SimpleSeed implements SeedInterface
 {
@@ -32,7 +32,7 @@ abstract class SimpleSeed implements SeedInterface
      *
      * @return string
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     abstract protected function getTable();
 
@@ -53,7 +53,7 @@ abstract class SimpleSeed implements SeedInterface
      *
      * @return mixed
      *
-     * @author Sergii Donii <s.donii@infomir.com>
+     * @author Sergii Donii <doniysa@gmail.com>
      */
     abstract protected function getData();
 }
