@@ -1,22 +1,19 @@
-[![Build Status](https://travis-ci.org/sonrac/symfony-seed-command.svg?branch=master)](https://travis-ci.org/sonrac/symfony-seed-command) 
+[![Build Status](https://travis-ci.org/sonrac/functional-traits-for-coverage.svg?branch=master)](https://travis-ci.org/sonrac/functional-traits-for-coverage) 
 [![StyleCI](https://styleci.io/repos/105322873/shield?branch=master&style=flat)](https://styleci.io/repos/105322873)
     
-![Scrutinizer Build](https://scrutinizer-ci.com/g/sonrac/symfony-seed-command/badges/build.png?b=master)
-![Scrutinizer](https://scrutinizer-ci.com/g/sonrac/symfony-seed-command/badges/quality-score.png?b=master)
-![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/sonrac/symfony-seed-command/badges/coverage.png?b=master)
-[![codecov](https://codecov.io/gh/sonrac/symfony-seed-command/branch/master/graph/badge.svg)](https://codecov.io/gh/sonrac/symfony-seed-command)
-![Packagist](https://poser.pugx.org/sonrac/symfony-seed-command/v/stable.svg)
-[![Latest Unstable Version](https://poser.pugx.org/sonrac/symfony-seed-command/v/unstable)](https://packagist.org/packages/sonrac/symfony-seed-command)
-![License](https://poser.pugx.org/sonrac/symfony-seed-command/license.svg)
-[![Total Downloads](https://poser.pugx.org/sonrac/symfony-seed-command/downloads)](https://packagist.org/packages/sonrac/symfony-seed-command)
-[![Monthly Downloads](https://poser.pugx.org/sonrac/symfony-seed-command/d/monthly)](https://packagist.org/packages/sonrac/symfony-seed-command)
-[![Daily Downloads](https://poser.pugx.org/sonrac/symfony-seed-command/d/daily)](https://packagist.org/packages/sonrac/symfony-seed-command)
-[![composer.lock](https://poser.pugx.org/sonrac/symfony-seed-command/composerlock)](https://packagist.org/packages/sonrac/symfony-seed-command)
+![Scrutinizer Build](https://scrutinizer-ci.com/g/sonrac/functional-traits-for-coverage/badges/build.png?b=master)
+![Scrutinizer](https://scrutinizer-ci.com/g/sonrac/functional-traits-for-coverage/badges/quality-score.png?b=master)
+![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/sonrac/functional-traits-for-coverage/badges/coverage.png?b=master)
+[![codecov](https://codecov.io/gh/sonrac/functional-traits-for-coverage/branch/master/graph/badge.svg)](https://codecov.io/gh/sonrac/functional-traits-for-coverage)
+![Packagist](https://poser.pugx.org/sonrac/functional-traits-for-coverage/v/stable.svg)
+[![Latest Unstable Version](https://poser.pugx.org/sonrac/functional-traits-for-coverage/v/unstable)](https://packagist.org/packages/sonrac/functional-traits-for-coverage)
+![License](https://poser.pugx.org/sonrac/functional-traits-for-coverage/license.svg)
+[![composer.lock](https://poser.pugx.org/sonrac/functional-traits-for-coverage/composerlock)](https://packagist.org/packages/sonrac/functional-traits-for-coverage)
 
 ## Install
 
 ```bash
-composer require sonrac/symfony-seed-command
+composer require sonrac/functional-traits-for-coverage
 ```
 
 ## Introduction
