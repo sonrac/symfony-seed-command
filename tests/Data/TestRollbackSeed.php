@@ -9,10 +9,8 @@
 namespace Tests\Data;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Query\QueryBuilder;
 use sonrac\SimpleSeed\RollbackSeedInterface;
 use sonrac\SimpleSeed\RollbackTrait;
-use sonrac\SimpleSeed\SeedInterface;
 
 class TestRollbackSeed extends TestSeed implements RollbackSeedInterface
 {
