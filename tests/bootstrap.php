@@ -1,4 +1,6 @@
 <?php
+// phpcs:disable
+
 /**
  * Created by PhpStorm.
  *
@@ -29,3 +31,4 @@ function sonrac_getDoctrineConnection()
 
     return DriverManager::getConnection($connectionParams, $config);
 }
+// phpcs:enable

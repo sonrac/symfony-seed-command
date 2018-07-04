@@ -3,12 +3,23 @@
   "description": "Symfony simple seed command",
   "type": "library",
   "require": {
-    "php": ">=5.3",
+    "php": ">=5.5",
     "symfony/console": ">=2.3",
     "doctrine/dbal": ">=2.2.0"
   },
   "require-dev": {
-    "phpunit/phpunit": ">=4.8"
+    "phpunit/phpunit": ">=4.8",
+    "squizlabs/php_codesniffer": "*",
+    "refinery29/php-cs-fixer-config": "*"
+  },
+  "scripts": {
+    "full-check": "php FullCheckProject.php",
+    "fix-code": "php-cs-fixer fix src; php-cs-fixer fix tests;",
+    "test": "phpunit --color=never --coverage-text",
+    "test-coverage-html": "phpunit --coverage-html coverage",
+    "review": "phpcs src && php vendor/bin/phpcs tests",
+    "analyse": "phpstan analyze src tests",
+    "swagger-generate": "swagger --output resources/api.json src"
   },
   "license": "MIT",
   "authors": [

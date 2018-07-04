@@ -7,10 +7,8 @@
 
 namespace Tests;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
-use sonrac\SimpleSeed\SimpleSeedWithCheckExists;
+use Tests\Stub\SeedExists;
 
 /**
  * Class SimpleSeedExistsTest.
@@ -19,12 +17,14 @@ use sonrac\SimpleSeed\SimpleSeedWithCheckExists;
  */
 class SimpleSeedExistsTest extends TestCase
 {
+    use TesterTrait;
+
     /**
      * Doctrine Connection.
      *
      * @var null|\Doctrine\DBAL\Connection
      */
-    private $connection = null;
+    private $connection;
 
     /**
      * Test insert data in table.
@@ -63,8 +63,7 @@ class SimpleSeedExistsTest extends TestCase
         $command = new SeedExists();
         $this->assertTrue($command->run($this->connection->createQueryBuilder(), $this->connection));
 
-        $this->assertEquals(2, $this->connection->createQueryBuilder()
-            ->select('count(id)')->from('users', 'users')->execute()->fetch(\PDO::FETCH_COLUMN));
+        $this->checkCount(2);
 
         $this->assertEquals([], $command->getInsertedData());
         $this->assertEquals(self::getData(), $command->getSkippedData());
@@ -72,6 +71,8 @@ class SimpleSeedExistsTest extends TestCase
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     protected function setUp()
     {
@@ -105,27 +106,6 @@ class SimpleSeedExistsTest extends TestCase
     }
 
     /**
-     * Create table.
-     *
-     * @throws
-     *
-     * @author Sergii Donii <doniysa@gmail.com>
-     */
-    private function createTable()
-    {
-        $table = new Table('users');
-        $table->addColumn('id', Type::INTEGER);
-        $table->addColumn('username', Type::STRING)
-            ->setLength(255)
-            ->setNotnull(true);
-        $table->addColumn('password', Type::STRING)
-            ->setLength(1024)
-            ->setNotnull(true);
-        $table->setPrimaryKey(['id']);
-        $this->connection->getSchemaManager()->createTable($table);
-    }
-
-    /**
      * Get data for seed.
      *
      * @return array
@@ -144,32 +124,5 @@ class SimpleSeedExistsTest extends TestCase
                 'password' => 'asidlkfhsj;ldfjas;df',
             ],
         ];
-    }
-}
-
-class SeedExists extends SimpleSeedWithCheckExists
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected function getTable()
-    {
-        return 'users';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getData()
-    {
-        return SimpleSeedExistsTest::getData();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getWhereForRow($data)
-    {
-        return ['username' => $data['username']];
     }
 }

@@ -63,7 +63,9 @@ class SeedCommandTest extends TestCase
     public function testErrorClass()
     {
         $input = $this->getMockBuilder(Input::class);
-        $input = $input->setMethods(['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption'])->getMock();
+        $input = $input->setMethods(
+            ['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption']
+        )->getMock();
         $input->expects($this->any())
             ->method('getOption')
             ->willReturn('testClassNotExists');
@@ -87,7 +89,9 @@ class SeedCommandTest extends TestCase
     public function testErrorClassDoesNotImplementInterface()
     {
         $input = $this->getMockBuilder(Input::class);
-        $input = $input->setMethods(['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption'])->getMock();
+        $input = $input->setMethods(
+            ['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption']
+        )->getMock();
         $input->expects($this->any())
             ->method('getOption')
             ->willReturn('sonrac\\SimpleSeed\\SeedCommand');
@@ -111,7 +115,9 @@ class SeedCommandTest extends TestCase
     public function testSeedSuccess()
     {
         $input = $this->getMockBuilder(Input::class);
-        $input = $input->setMethods(['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption'])->getMock();
+        $input = $input->setMethods(
+            ['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption']
+        )->getMock();
         $input->expects($this->any())
             ->method('getOption')
             ->willReturn('Tests\\Data\\TestSeed');

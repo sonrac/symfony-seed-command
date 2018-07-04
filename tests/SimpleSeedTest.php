@@ -7,10 +7,8 @@
 
 namespace Tests;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
-use sonrac\SimpleSeed\SimpleSeed;
+use Tests\Stub\Seed;
 
 /**
  * Class SimpleSeedTest.
@@ -19,12 +17,14 @@ use sonrac\SimpleSeed\SimpleSeed;
  */
 class SimpleSeedTest extends TestCase
 {
+    use TesterTrait;
+
     /**
      * Doctrine Connection.
      *
      * @var null|\Doctrine\DBAL\Connection
      */
-    private $connection = null;
+    protected $connection;
 
     /**
      * Test insert data in table.
@@ -38,8 +38,7 @@ class SimpleSeedTest extends TestCase
         $command = new Seed();
         $this->assertTrue($command->run($this->connection->createQueryBuilder(), $this->connection));
 
-        $this->assertEquals(2, $this->connection->createQueryBuilder()
-            ->select('count(id)')->from('users', 'users')->execute()->fetch(\PDO::FETCH_COLUMN));
+        $this->checkCount(2);
     }
 
     /**
@@ -74,54 +73,5 @@ class SimpleSeedTest extends TestCase
     private function checkTableExists()
     {
         return $this->connection->getSchemaManager()->tablesExist(['users']);
-    }
-
-    /**
-     * Create table.
-     *
-     * @throws
-     *
-     * @author Sergii Donii <doniysa@gmail.com>
-     */
-    private function createTable()
-    {
-        $table = new Table('users');
-        $table->addColumn('id', Type::INTEGER);
-        $table->addColumn('username', Type::STRING)
-            ->setLength(255)
-            ->setNotnull(true);
-        $table->addColumn('password', Type::STRING)
-            ->setLength(1024)
-            ->setNotnull(true);
-        $table->setPrimaryKey(['id']);
-        $this->connection->getSchemaManager()->createTable($table);
-    }
-}
-
-class Seed extends SimpleSeed
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected function getTable()
-    {
-        return 'users';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getData()
-    {
-        return [
-            [
-                'username' => 'jane',
-                'password' => '3q249p5uwe4rjgklerhtg',
-            ],
-            [
-                'username' => 'john',
-                'password' => 'asidlkfhsj;ldfjas;df',
-            ],
-        ];
     }
 }

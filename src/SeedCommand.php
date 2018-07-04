@@ -2,6 +2,7 @@
 
 namespace sonrac\SimpleSeed;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidOptionException;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,7 +32,7 @@ class SeedCommand extends Command
      *
      * @throws \Exception
      */
-    public function __construct($name, $connection)
+    public function __construct($name = null, Connection $connection = null)
     {
         parent::__construct($name);
 
