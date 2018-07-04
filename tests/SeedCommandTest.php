@@ -23,19 +23,7 @@ class SeedCommandTest extends TestCase
     /**
      * @var \sonrac\SimpleSeed\SeedCommand
      */
-    private $seedCommand = null;
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Doctrine\DBAL\DBALException
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->seedCommand = new SeedCommand(null, sonrac_getDoctrineConnection());
-    }
+    private $seedCommand;
 
     /**
      * Test empty connection exception.
@@ -62,23 +50,53 @@ class SeedCommandTest extends TestCase
      */
     public function testErrorClass()
     {
-        $input = $this->getMockBuilder(Input::class);
-        $input = $input->setMethods(
-            ['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption']
-        )->getMock();
-        $input->expects($this->any())
-            ->method('getOption')
-            ->willReturn('testClassNotExists');
-
-        $output = $this->getMockBuilder(Output::class)->getMock();
-
         if (method_exists($this, 'setExpectedException')) {
             $this->setExpectedException(SeedClassNotFoundException::class);
         } else {
             $this->expectException(SeedClassNotFoundException::class);
         }
 
-        $this->seedCommand->run($input, $output);
+        $this->seedCommand->run($this->getInputMock(false, 'SimpleSeedNotFound'), $this->getOutputMock());
+    }
+
+    /**
+     * Test error class exists.
+     *
+     * @throws \Exception
+     */
+    public function testErrorRollBackClass()
+    {
+        if (method_exists($this, 'setExpectedException')) {
+            $this->setExpectedException(InvalidSeedClassException::class);
+        } else {
+            $this->expectException(InvalidSeedClassException::class);
+        }
+
+        $this->seedCommand->run($this->getInputMock(true, 'Tests\\Data\\TestSeed'), $this->getOutputMock());
+    }
+
+    /**
+     * Get mock input
+     *
+     * @param string $retClass
+     * @param bool   $retRollback
+     *
+     * @return \PHPUnit_Framework_MockObject_MockBuilder|\PHPUnit_Framework_MockObject_MockObject|SeedCommand
+     */
+    private function getInputMock($retRollback = false, $retClass = 'Tests\\Data\\TestRollbackSeed')
+    {
+        $input = $this->getMockBuilder(Input::class);
+        $input = $input->setMethods(
+            ['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption']
+        )->getMock();
+        $input->expects($this->at(1))
+            ->method('getOption')
+            ->willReturn($retClass);
+        $input->expects($this->at(2))
+            ->method('getOption')
+            ->willReturn($retRollback);
+
+        return $input;
     }
 
     /**
@@ -88,23 +106,23 @@ class SeedCommandTest extends TestCase
      */
     public function testErrorClassDoesNotImplementInterface()
     {
-        $input = $this->getMockBuilder(Input::class);
-        $input = $input->setMethods(
-            ['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption']
-        )->getMock();
-        $input->expects($this->any())
-            ->method('getOption')
-            ->willReturn('sonrac\\SimpleSeed\\SeedCommand');
-
-        $output = $this->getMockBuilder(Output::class)->getMock();
-
         if (method_exists($this, 'setExpectedException')) {
             $this->setExpectedException(InvalidSeedClassException::class);
         } else {
             $this->expectException(InvalidSeedClassException::class);
         }
 
-        $this->seedCommand->run($input, $output);
+        $this->seedCommand->run($this->getInputMock(false, 'sonrac\SimpleSeed\SeedCommand'), $this->getOutputMock());
+    }
+
+    /**
+     * Get mock for output.
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Console\Output\Output
+     */
+    private function getOutputMock()
+    {
+        return $this->getMockBuilder(Output::class)->getMock();
     }
 
     /**
@@ -114,16 +132,28 @@ class SeedCommandTest extends TestCase
      */
     public function testSeedSuccess()
     {
-        $input = $this->getMockBuilder(Input::class);
-        $input = $input->setMethods(
-            ['getOption', 'parse', 'hasParameterOption', 'getFirstArgument', 'getParameterOption']
-        )->getMock();
-        $input->expects($this->any())
-            ->method('getOption')
-            ->willReturn('Tests\\Data\\TestSeed');
+        $this->assertEquals(0, $this->seedCommand->run($this->getInputMock(), $this->getOutputMock()));
+    }
 
-        $output = $this->getMockBuilder(Output::class)->getMock();
+    /**
+     * Test seed run success.
+     *
+     * @throws \Exception
+     */
+    public function testRollbackSeedSuccess()
+    {
+        $this->assertEquals(0, $this->seedCommand->run($this->getInputMock(true), $this->getOutputMock()));
+    }
 
-        $this->assertEquals(0, $this->seedCommand->run($input, $output));
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->seedCommand = new SeedCommand(null, sonrac_getDoctrineConnection());
     }
 }

@@ -9,7 +9,7 @@ namespace sonrac\SimpleSeed;
  */
 class InvalidSeedClassException extends \Exception
 {
-    protected $message = 'Seed class must be implement Command\\SeedInterface';
+    protected $message = 'Seed class must be implement sonrac\\SimpleSeed\\SeedInterface';
 
     protected $code = 'invalid.seed.class.implement';
 }
