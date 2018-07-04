@@ -6,7 +6,7 @@ use sonrac\SimpleSeed\SimpleSeedWithCheckExists;
 use Tests\SimpleSeedExistsTest;
 
 /**
- * Class SeedExists
+ * Class SeedExists.
  */
 class SeedExists extends SimpleSeedWithCheckExists
 {

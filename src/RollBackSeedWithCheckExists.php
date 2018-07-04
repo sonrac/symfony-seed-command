@@ -3,7 +3,7 @@
 namespace sonrac\SimpleSeed;
 
 /**
- * Class RollBackSeedWithCheckExists
+ * Class RollBackSeedWithCheckExists.
  */
 abstract class RollBackSeedWithCheckExists extends SimpleSeedWithCheckExists implements RollbackSeedInterface
 {

@@ -5,7 +5,7 @@ namespace Tests;
 use Tests\Stub\RollbackSeed;
 
 /**
- * Class RollbackSimpleTest
+ * Class RollbackSimpleTest.
  */
 class RollbackSimpleTest extends SimpleSeedTest
 {
