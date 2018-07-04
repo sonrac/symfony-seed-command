@@ -6,7 +6,7 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 
 /**
- * Class TesterTrait
+ * Class TesterTrait.
  */
 trait TesterTrait
 {

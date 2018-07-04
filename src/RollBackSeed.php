@@ -3,7 +3,7 @@
 namespace sonrac\SimpleSeed;
 
 /**
- * Class RollBackSeed
+ * Class RollBackSeed.
  */
 abstract class RollBackSeed extends SimpleSeed implements RollbackSeedInterface
 {

@@ -6,7 +6,7 @@ use sonrac\SimpleSeed\RollbackSeedInterface;
 use sonrac\SimpleSeed\RollbackTrait;
 
 /**
- * Class RollbackSkipSeed
+ * Class RollbackSkipSeed.
  */
 class RollbackSkipSeed extends Seed implements RollbackSeedInterface
 {

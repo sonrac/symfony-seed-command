@@ -5,12 +5,12 @@ namespace sonrac\SimpleSeed;
 use Doctrine\DBAL\Connection;
 
 /**
- * Class RollbackTrait
+ * Class RollbackTrait.
  */
 trait RollbackTrait
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function down(Connection $connection)
     {

@@ -5,7 +5,7 @@ namespace Tests\Stub;
 use sonrac\SimpleSeed\SimpleSeed;
 
 /**
- * Class Seed
+ * Class Seed.
  */
 class Seed extends SimpleSeed
 {

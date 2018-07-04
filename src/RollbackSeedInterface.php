@@ -5,7 +5,7 @@ namespace sonrac\SimpleSeed;
 use Doctrine\DBAL\Connection;
 
 /**
- * Interface RollbackSeedInterface
+ * Interface RollbackSeedInterface.
  */
 interface RollbackSeedInterface
 {
