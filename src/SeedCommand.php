@@ -57,14 +57,13 @@ class SeedCommand extends Command
                 InputOption::VALUE_OPTIONAL,
                 'Rollback seed',
                 false
-            )
-        ;
+            );
     }
 
     /**
      * {@inheritdoc}
      *
-     * @throws \sonrac\SimpleSeed\InvalidSeedClassException if seed class is invalid
+     * @throws \sonrac\SimpleSeed\InvalidSeedClassException                if seed class is invalid
      * @throws \Symfony\Component\Console\Exception\InvalidOptionException
      * @throws \Exception
      * @throws \sonrac\SimpleSeed\SeedClassNotFoundException
@@ -91,7 +90,7 @@ class SeedCommand extends Command
      * Check correct seed class.
      *
      * @param string $class
-     * @param bool $checkRollback
+     * @param bool   $checkRollback
      *
      * @throws \Symfony\Component\Console\Exception\InvalidOptionException
      * @throws \Exception

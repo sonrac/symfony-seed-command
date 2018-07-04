@@ -76,7 +76,7 @@ class SeedCommandTest extends TestCase
     }
 
     /**
-     * Get mock input
+     * Get mock input.
      *
      * @param string $retClass
      * @param bool   $retRollback
