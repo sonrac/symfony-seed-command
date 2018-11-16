@@ -3,6 +3,7 @@
 namespace sonrac\SimpleSeed;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
@@ -19,9 +20,22 @@ abstract class SimpleSeed implements SeedInterface
     public function run(QueryBuilder $builder, Connection $connection)
     {
         $data = $this->getData();
-
+        $connection->beginTransaction();
         foreach ($data as $datum) {
-            $connection->insert($this->getTable(), $datum);
+            try {
+                $connection->insert($this->getTable(), $datum);
+            } catch (\Exception $e) {
+                $connection->rollBack();
+            }
+        }
+
+        try {
+            $connection->commit();
+        } catch (ConnectionException $e) {
+            // No active transaction
+            echo($e->getMessage().PHP_EOL);
+        } catch (\Exception $e) {
+            $connection->rollBack();
         }
 
         return true;
