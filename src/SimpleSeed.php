@@ -33,7 +33,7 @@ abstract class SimpleSeed implements SeedInterface
             $connection->commit();
         } catch (ConnectionException $e) {
             // No active transaction
-            echo($e->getMessage().PHP_EOL);
+            echo $e->getMessage().PHP_EOL;
         } catch (\Exception $e) {
             $connection->rollBack();
         }
