@@ -17,7 +17,7 @@
     "fix-code": "php-cs-fixer fix src; php-cs-fixer fix tests;",
     "test": "phpunit --color=never --coverage-text",
     "test-coverage-html": "phpunit --coverage-html coverage",
-    "review": "phpcs src && php vendor/bin/phpcs tests",
+    "review": "phpcs",
     "analyse": "phpstan analyze src tests",
     "swagger-generate": "swagger --output resources/api.json src"
   },

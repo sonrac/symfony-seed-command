@@ -53,9 +53,6 @@
     on the command line will ignore all file tags.
     -->
     <file>src</file>
-    <file>resources/migrations</file>
-    <file>config</file>
-    <file>bootstrap</file>
     <file>tests</file>
 
     <!--
