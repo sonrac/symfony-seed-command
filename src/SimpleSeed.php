@@ -42,6 +42,7 @@ abstract class SimpleSeed implements SeedInterface
                 $connection->commit();
             } catch (\Exception $e) {
                 $connection->rollBack();
+
                 throw $e;
             }
         }
