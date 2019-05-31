@@ -34,7 +34,7 @@ trait RollbackTrait
 
             $query->execute();
 
-            ++$count;
+            $count++;
         }
 
         return $count > 0;
