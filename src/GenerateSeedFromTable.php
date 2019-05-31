@@ -187,9 +187,6 @@ class GenerateSeedFromTable extends Command
         file_put_contents($outPath."/{$className}.php", $templateString);
 
         require_once $outPath."/{$className}.php";
-
-        $a = new UsersSeed($this->connection);
-        var_dump($a->getData());
     }
 
     /**
