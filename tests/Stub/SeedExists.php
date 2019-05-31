@@ -13,7 +13,7 @@ class SeedExists extends SimpleSeedWithCheckExists
     /**
      * {@inheritdoc}
      */
-    protected function getTable()
+    public function getTable()
     {
         return 'users';
     }
@@ -21,7 +21,7 @@ class SeedExists extends SimpleSeedWithCheckExists
     /**
      * {@inheritdoc}
      */
-    protected function getData()
+    public function getData()
     {
         return SimpleSeedExistsTest::getData();
     }
@@ -29,7 +29,7 @@ class SeedExists extends SimpleSeedWithCheckExists
     /**
      * {@inheritdoc}
      */
-    protected function getWhereForRow($data)
+    public function getWhereForRow($data)
     {
         return ['username' => $data['username']];
     }

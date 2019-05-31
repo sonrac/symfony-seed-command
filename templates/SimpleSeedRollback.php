@@ -13,7 +13,7 @@ class __classname__ extends SimpleSeed
     /**
      * @inheritDoc
      */
-    protected function getTable()
+    public function getTable()
     {
         return "{table_name}";
     }
@@ -21,7 +21,7 @@ class __classname__ extends SimpleSeed
     /**
      * @inheritDoc
      */
-    protected function getData()
+    public function getData()
     {
         return [__data__];
     }
@@ -33,7 +33,7 @@ class __classname__ extends SimpleSeed
      *
      * @return array
      */
-    protected function getDeleteFields($data)
+    public function getDeleteFields($data)
     {
         return [__rollback_data__];
     }

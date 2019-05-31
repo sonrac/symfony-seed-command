@@ -16,7 +16,7 @@ class __classname__ extends SimpleSeed
     /**
      * @inheritDoc
      */
-    protected function getTable()
+    public function getTable()
     {
         return "{table_name}";
     }
@@ -24,7 +24,7 @@ class __classname__ extends SimpleSeed
     /**
      * @inheritDoc
      */
-    protected function getData()
+    public function getData()
     {
         return [__data__];
     }

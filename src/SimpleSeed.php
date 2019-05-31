@@ -57,7 +57,7 @@ abstract class SimpleSeed implements SeedInterface
      *
      * @author Sergii Donii <doniysa@gmail.com>
      */
-    abstract protected function getTable();
+    abstract public function getTable();
 
     /**
      * Get data for table in format:
@@ -78,5 +78,5 @@ abstract class SimpleSeed implements SeedInterface
      *
      * @author Sergii Donii <doniysa@gmail.com>
      */
-    abstract protected function getData();
+    abstract public function getData();
 }

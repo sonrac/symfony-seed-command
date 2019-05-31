@@ -3,6 +3,7 @@
   "description": "Symfony simple seed command",
   "type": "library",
   "require": {
+    "ext-json": "*",
     "php": ">=5.5",
     "symfony/console": ">=2.3",
     "doctrine/dbal": ">=2.2.0"

@@ -12,7 +12,7 @@ class Seed extends SimpleSeed
     /**
      * {@inheritdoc}
      */
-    protected function getTable()
+    public function getTable()
     {
         return 'users';
     }
@@ -20,7 +20,7 @@ class Seed extends SimpleSeed
     /**
      * {@inheritdoc}
      */
-    protected function getData()
+    public function getData()
     {
         return [
             [

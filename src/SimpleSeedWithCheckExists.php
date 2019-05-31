@@ -108,7 +108,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
      */
     abstract protected function getWhereForRow($data);
 
-    protected function prepeareWhere($data)
+    public function prepeareWhere($data)
     {
         $where = '';
 

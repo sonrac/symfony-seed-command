@@ -47,7 +47,7 @@ trait RollbackTrait
      *
      * @return array
      */
-    protected function getDeleteFields($data)
+    public function getDeleteFields($data)
     {
         return $data;
     }
@@ -59,7 +59,7 @@ trait RollbackTrait
      *
      * @return bool
      */
-    protected function checkDeleted($data)
+    public function checkDeleted($data)
     {
         return true;
     }

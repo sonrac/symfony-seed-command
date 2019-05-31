@@ -12,7 +12,7 @@ class RollbackSkipSeed extends Seed implements RollbackSeedInterface
 {
     use RollbackTrait;
 
-    protected function checkDeleted($data)
+    public function checkDeleted($data)
     {
         return $data['username'] !== 'jane';
     }

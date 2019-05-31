@@ -3,6 +3,7 @@
 namespace sonrac\SimpleSeed;
 
 use Doctrine\DBAL\Connection;
+use Seeds\UsersSeed;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -110,16 +111,16 @@ class GenerateSeedFromTable extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $table = $input->getOption('table');
-        $checkExists = $input->getOption('check-exists');
-        $isRollback = $input->getOption('rollback');
-        $outPath = realpath($input->getOption('out-path'));
-        $namespace = $input->getOption('namespace');
-        $className = $input->getOption('classname');
-        $startID = $input->getOption('start-id');
-        $endID = $input->getOption('end-id');
+        $table           = $input->getOption('table');
+        $checkExists     = $input->getOption('check-exists');
+        $isRollback      = $input->getOption('rollback');
+        $outPath         = realpath($input->getOption('out-path'));
+        $namespace       = $input->getOption('namespace');
+        $className       = $input->getOption('classname');
+        $startID         = $input->getOption('start-id');
+        $endID           = $input->getOption('end-id');
         $rollbackColumns = $input->getOption('rollback-columns') ?: [];
-        $checkColumns = $input->getOption('check-columns') ?: [];
+        $checkColumns    = $input->getOption('check-columns') ?: [];
 
         if (!is_readable($outPath)) {
             throw new \InvalidArgumentException('Path does not readable or does not exists');
@@ -137,7 +138,7 @@ class GenerateSeedFromTable extends Command
         $this->primaryKey = $tableDefinition->getPrimaryKey();
 
         $rolBackTemplate = '';
-        $checkTemplate = '';
+        $checkTemplate   = '';
 
         if ($this->primaryKey) {
             $columns = $this->primaryKey->getColumns();
@@ -145,13 +146,13 @@ class GenerateSeedFromTable extends Command
                 /* @var \Doctrine\DBAL\Schema\Identifier $column */
                 if ($isRollback && count($rollbackColumns) == 0) {
                     $rolBackTemplate .= (empty($rolBackTemplate) ? "\n" : '').
-                                          "            \"`{$column}`\" => \$data[\"$column\"],".
+                                          "            '`{$column}`' => \$data['$column'],".
                                           ($index === count($columns) - 1 ? '' : "\n");
                     $rollbackColumns[] = $column;
                 }
                 if ($checkExists && count($checkColumns) == 0) {
                     $checkTemplate .= (empty($checkTemplate) ? "\n" : '').
-                                       "            \"`{$column}`\" => \$data[\"$column\"],".
+                                       "            '`{$column}`' => \$data['$column'],".
                                        ($index === count($columns) - 1 ? '' : "\n");
                     $checkColumns[] = $column;
                 }
@@ -161,7 +162,7 @@ class GenerateSeedFromTable extends Command
         $rolBackTemplate .= empty($rolBackTemplate) ? '' : "\n        ";
         $checkTemplate .= empty($checkTemplate) ? '' : "\n        ";
 
-        $templateName = $this->getTemplate($checkExists, $isRollback);
+        $templateName   = $this->getTemplate($checkExists, $isRollback);
         $templateString = file_get_contents($templateName);
         $templateString = str_replace(
             [
@@ -184,9 +185,22 @@ class GenerateSeedFromTable extends Command
         );
 
         file_put_contents($outPath."/{$className}.php", $templateString);
-        var_dump($templateString);
+
+        require_once $outPath."/{$className}.php";
+
+        $a = new UsersSeed($this->connection);
+        var_dump($a->getData());
     }
 
+    /**
+     * Scan data from table.
+     *
+     * @param int    $startID
+     * @param int    $endID
+     * @param string $table
+     *
+     * @return string
+     */
     protected function scanData(
         $startID,
         $endID,
@@ -200,8 +214,8 @@ class GenerateSeedFromTable extends Command
             $where['end_id'] = $endID;
         }
 
-        $offset = 0;
-        $limit = 30;
+        $offset       = 0;
+        $limit        = 30;
         $dataTemplate = '';
         while (true) {
             $data = $this->getNextData($table, $limit, $offset, $where);
@@ -214,7 +228,8 @@ class GenerateSeedFromTable extends Command
                 $dataTemplate .= (empty($dataTemplate) ? "\n" : '')."            [\n";
                 foreach ($datum as $column => $value) {
                     $dataTemplate .= (empty($dataTemplate) ? "\n" : '').
-                                     "                \"`{$column}`\" => \"$value\",\n";
+                                     "                '`{$column}`' => ".$this->prepareValue($value, $column, 120)
+                                     .",\n";
                 }
                 $dataTemplate .= (empty($dataTemplate) ? "\n" : '')."            ],\n";
             }
@@ -248,7 +263,7 @@ class GenerateSeedFromTable extends Command
                     $query->andWhere("$column >= :start_{$count}")
                           ->setParameter(":start_{$count}", $data[$count]);
                 }
-                $count++;
+                ++$count;
             }
         }
 
@@ -261,11 +276,63 @@ class GenerateSeedFromTable extends Command
                     $query->andWhere("$column <= :end_{$count}")
                           ->setParameter(":end_{$count}", $data[$count]);
                 }
-                $count++;
+                ++$count;
             }
         }
 
         return $query->execute()->fetchAll();
+    }
+
+    protected function prepareValue($value, $columnName, $maxInLine)
+    {
+        if (mb_strlen($value) > $maxInLine) {
+            $start  = 0;
+            $result = '';
+            for ($i = 0; $i < round(mb_strlen($value) / $maxInLine); ++$i) {
+                $resultNextLine = $this->escape(mb_substr($value, $start, $maxInLine));
+                $offset         = 0;
+
+                if (mb_strlen($resultNextLine) > $maxInLine) {
+                    $offset         = $maxInLine - mb_strlen($resultNextLine);
+                    $nextLine       = mb_substr($value, $start, $maxInLine + $offset);
+                    $resultNextLine = $this->escape($nextLine);
+                }
+                $result .= "\n$resultNextLine";
+                $start += $maxInLine + $offset;
+            }
+
+            return "\"$result\"\n";
+        }
+
+        return '"'.$this->escape($value).'"';
+    }
+
+    /**
+     * Escape value.
+     *
+     * @param string $value
+     *
+     * @return string|string[]|null
+     */
+    protected function escape($value)
+    {
+        return str_replace(
+            "\n",
+            '\\n',
+            str_replace(
+                '$',
+                '\$',
+                str_replace(
+                    '\\\\"',
+                    '\\"',
+                    str_replace(
+                        '"',
+                        '\\"',
+                        $value
+                    )
+                )
+            )
+        );
     }
 
     /**

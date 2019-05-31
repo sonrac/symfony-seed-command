@@ -13,7 +13,7 @@ class __classname__ extends SimpleSeedWithCheckExists
     /**
      * @inheritDoc
      */
-    protected function getTable()
+    public function getTable()
     {
         return "{table_name}";
     }
@@ -21,7 +21,7 @@ class __classname__ extends SimpleSeedWithCheckExists
     /**
      * @inheritDoc
      */
-    protected function getData()
+    public function getData()
     {
         return [__data__];
     }
@@ -30,7 +30,7 @@ class __classname__ extends SimpleSeedWithCheckExists
     /**
      * @inheritDoc
      */
-    protected function getWhereForRow($data)
+    public function getWhereForRow($data)
     {
         return [__check_data__];
     }
@@ -42,7 +42,7 @@ class __classname__ extends SimpleSeedWithCheckExists
      *
      * @return array
      */
-    protected function getDeleteFields($data)
+    public function getDeleteFields($data)
     {
         return [__data__];
     }
