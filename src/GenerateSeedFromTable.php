@@ -145,13 +145,13 @@ class GenerateSeedFromTable extends Command
                 /* @var \Doctrine\DBAL\Schema\Identifier $column */
                 if ($isRollback && count($rollbackColumns) == 0) {
                     $rolBackTemplate   .= (empty($rolBackTemplate) ? "\n" : '').
-                                          "            '`{$column}`' => \$data['$column'],".
+                                          "            '{$column}' => \$data['$column'],".
                                           ($index === count($columns) - 1 ? '' : "\n");
                     $rollbackColumns[] = $column;
                 }
                 if ($checkExists && count($checkColumns) == 0) {
                     $checkTemplate  .= (empty($checkTemplate) ? "\n" : '').
-                                       "            '`{$column}`' => \$data['$column'],".
+                                       "            '{$column}' => \$data['$column'],".
                                        ($index === count($columns) - 1 ? '' : "\n");
                     $checkColumns[] = $column;
                 }
@@ -224,7 +224,7 @@ class GenerateSeedFromTable extends Command
                 $dataTemplate .= (empty($dataTemplate) ? "\n" : '')."            [\n";
                 foreach ($datum as $column => $value) {
                     $dataTemplate .= (empty($dataTemplate) ? "\n" : '').
-                                     "                '{$column}' => ".$this->prepareValue($value, $column, 120)
+                                     "                '`{$column}`' => ".$this->prepareValue($value, $column, 120)
                                      .",\n";
                 }
                 $dataTemplate .= (empty($dataTemplate) ? "\n" : '')."            ],\n";
