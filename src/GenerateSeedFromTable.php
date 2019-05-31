@@ -10,8 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class GenerateSeedFromTable.
- *
- * @package sonrac\SimpleSeed
  */
 class GenerateSeedFromTable extends Command
 {
@@ -47,88 +45,88 @@ class GenerateSeedFromTable extends Command
      */
     protected function configure()
     {
-        $this->setName("seed:generate")
+        $this->setName('seed:generate')
              ->addOption(
-                 "table",
-                 "t",
+                 'table',
+                 't',
                  InputOption::VALUE_REQUIRED,
-                 "Table name for seed generate"
+                 'Table name for seed generate'
              )
              ->addOption(
-                 "classname",
-                 "p",
+                 'classname',
+                 'p',
                  InputOption::VALUE_REQUIRED,
-                 "Seed class name"
+                 'Seed class name'
              )
              ->addOption(
-                 "rollback",
-                 "r",
+                 'rollback',
+                 'r',
                  InputOption::VALUE_NONE,
-                 "Generate seed with rollback"
+                 'Generate seed with rollback'
              )
              ->addOption(
-                 "check-exists",
-                 "e",
+                 'check-exists',
+                 'e',
                  InputOption::VALUE_NONE,
-                 "Generate seed with check exists"
+                 'Generate seed with check exists'
              )
              ->addOption(
-                 "namespace",
-                 "w",
+                 'namespace',
+                 'w',
                  InputOption::VALUE_OPTIONAL,
-                 "Seed namespace. Example: Simple\\\\Seed"
+                 'Seed namespace. Example: Simple\\\\Seed'
              )
              ->addOption(
-                 "out-path",
-                 "o",
+                 'out-path',
+                 'o',
                  InputOption::VALUE_REQUIRED,
-                 "Output path"
+                 'Output path'
              )
              ->addOption(
-                 "start-id",
-                 "s",
+                 'start-id',
+                 's',
                  InputOption::VALUE_OPTIONAL,
-                 "Start id for seed generate."
+                 'Start id for seed generate.'
              )
              ->addOption(
-                 "end-id",
-                 "l",
+                 'end-id',
+                 'l',
                  InputOption::VALUE_REQUIRED,
-                 "End id for seed generate"
+                 'End id for seed generate'
              )
              ->addOption(
-                 "rollback-columns",
-                 "k",
+                 'rollback-columns',
+                 'k',
                  InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-                 "Rollback columns for check"
+                 'Rollback columns for check'
              )
              ->addOption(
-                 "check-columns",
-                 "c",
+                 'check-columns',
+                 'c',
                  InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                 "Check columns. If set generated seed command with check exists"
+                 'Check columns. If set generated seed command with check exists'
              );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $table           = $input->getOption("table");
-        $checkExists     = $input->getOption("check-exists");
-        $isRollback      = $input->getOption("rollback");
-        $outPath         = realpath($input->getOption("out-path"));
-        $namespace       = $input->getOption("namespace");
-        $className       = $input->getOption("classname");
-        $startID         = $input->getOption("start-id");
-        $endID           = $input->getOption("end-id");
-        $rollbackColumns = $input->getOption("rollback-columns") ?: [];
-        $checkColumns    = $input->getOption("check-columns") ?: [];
+        $table           = $input->getOption('table');
+        $checkExists     = $input->getOption('check-exists');
+        $isRollback      = $input->getOption('rollback');
+        $outPath         = realpath($input->getOption('out-path'));
+        $namespace       = $input->getOption('namespace');
+        $className       = $input->getOption('classname');
+        $startID         = $input->getOption('start-id');
+        $endID           = $input->getOption('end-id');
+        $rollbackColumns = $input->getOption('rollback-columns') ?: [];
+        $checkColumns    = $input->getOption('check-columns') ?: [];
 
         if (!is_readable($outPath)) {
-            throw new \InvalidArgumentException("Path does not readable or does not exists");
+            throw new \InvalidArgumentException('Path does not readable or does not exists');
         }
 
         if (!$className) {
-            throw new \InvalidArgumentException("Class name does set");
+            throw new \InvalidArgumentException('Class name does set');
         }
 
         $tableDefinition = $this->connection->getSchemaManager()
@@ -138,44 +136,44 @@ class GenerateSeedFromTable extends Command
         /** @var \Doctrine\DBAL\Schema\Index|null $columns */
         $this->primaryKey = $tableDefinition->getPrimaryKey();
 
-        $rolBackTemplate = "";
-        $checkTemplate   = "";
+        $rolBackTemplate = '';
+        $checkTemplate   = '';
 
         if ($this->primaryKey) {
             $columns = $this->primaryKey->getColumns();
             foreach ($columns as $index => $column) {
                 /** @var \Doctrine\DBAL\Schema\Identifier $column */
                 if ($isRollback && count($rollbackColumns) == 0) {
-                    $rolBackTemplate   .= (empty($rolBackTemplate) ? "\n" : "").
+                    $rolBackTemplate .= (empty($rolBackTemplate) ? "\n" : '').
                                           "            \"`{$column}`\" => \$data[\"$column\"],".
-                                          ($index === count($columns) - 1 ? "" : "\n");
+                                          ($index === count($columns) - 1 ? '' : "\n");
                     $rollbackColumns[] = $column;
                 }
                 if ($checkExists && count($checkColumns) == 0) {
-                    $checkTemplate  .= (empty($checkTemplate) ? "\n" : "").
+                    $checkTemplate .= (empty($checkTemplate) ? "\n" : '').
                                        "            \"`{$column}`\" => \$data[\"$column\"],".
-                                       ($index === count($columns) - 1 ? "" : "\n");
+                                       ($index === count($columns) - 1 ? '' : "\n");
                     $checkColumns[] = $column;
                 }
             }
         }
 
-        $rolBackTemplate .= empty($rolBackTemplate) ? "" : "\n        ";
-        $checkTemplate   .= empty($checkTemplate) ? "" : "\n        ";
+        $rolBackTemplate .= empty($rolBackTemplate) ? '' : "\n        ";
+        $checkTemplate .= empty($checkTemplate) ? '' : "\n        ";
 
         $templateName   = $this->getTemplate($checkExists, $isRollback);
         $templateString = file_get_contents($templateName);
         $templateString = str_replace(
             [
                 "namespace __namespace__;\n\n",
-                "__classname__",
-                "{table_name}",
-                "__rollback_data__",
-                "__check_data__",
-                "__data__",
+                '__classname__',
+                '{table_name}',
+                '__rollback_data__',
+                '__check_data__',
+                '__data__',
             ],
             [
-                $namespace ? "namespace {$namespace};\n\n" : "",
+                $namespace ? "namespace {$namespace};\n\n" : '',
                 $className,
                 $table,
                 $rolBackTemplate,
@@ -196,29 +194,29 @@ class GenerateSeedFromTable extends Command
     ) {
         $where = [];
         if ($startID) {
-            $where["start_id"] = $startID;
+            $where['start_id'] = $startID;
         }
         if ($endID) {
-            $where["end_id"] = $endID;
+            $where['end_id'] = $endID;
         }
 
         $offset       = 0;
         $limit        = 30;
-        $dataTemplate = "";
+        $dataTemplate = '';
         while (true) {
             $data = $this->getNextData($table, $limit, $offset, $where);
 
             if (count($data) === 0) {
-                return $dataTemplate."        ";
+                return $dataTemplate.'        ';
             }
 
             foreach ($data as $index => $datum) {
-                $dataTemplate .= (empty($dataTemplate) ? "\n" : "")."            [\n";
+                $dataTemplate .= (empty($dataTemplate) ? "\n" : '')."            [\n";
                 foreach ($datum as $column => $value) {
-                    $dataTemplate .= (empty($dataTemplate) ? "\n" : "").
+                    $dataTemplate .= (empty($dataTemplate) ? "\n" : '').
                                      "                \"`{$column}`\" => \"$value\",\n";
                 }
-                $dataTemplate .= (empty($dataTemplate) ? "\n" : "")."            ],\n";
+                $dataTemplate .= (empty($dataTemplate) ? "\n" : '')."            ],\n";
             }
             $offset += $limit;
         }
@@ -236,36 +234,34 @@ class GenerateSeedFromTable extends Command
     {
         $query = $this->connection->createQueryBuilder();
 
-        $query->select(["*"])
+        $query->select(['*'])
               ->from($tableName)
               ->setFirstResult($offset)
               ->setMaxResults($limit);
 
-        if (isset($where["start_id"])) {
-            $data = explode(",", $where["start_id"]);
+        if (isset($where['start_id'])) {
+            $data = explode(',', $where['start_id']);
 
             $count = 0;
             foreach ($this->primaryKey->getColumns() as $column) {
-
                 if (isset($data[$count])) {
                     $query->andWhere("$column >= :start_{$count}")
                           ->setParameter(":start_{$count}", $data[$count]);
                 }
-                $count++;
+                ++$count;
             }
         }
 
-        if (isset($where["end_id"])) {
-            $data = explode(",", $where["end_id"]);
+        if (isset($where['end_id'])) {
+            $data = explode(',', $where['end_id']);
 
             $count = 0;
             foreach ($this->primaryKey->getColumns() as $column) {
-
                 if (isset($data[$count])) {
                     $query->andWhere("$column <= :end_{$count}")
                           ->setParameter(":end_{$count}", $data[$count]);
                 }
-                $count++;
+                ++$count;
             }
         }
 
@@ -283,17 +279,17 @@ class GenerateSeedFromTable extends Command
     protected function getTemplate($checkExists, $isRollback)
     {
         if (!$checkExists && !$isRollback) {
-            return __DIR__."/../templates/SimpleSeed.php";
+            return __DIR__.'/../templates/SimpleSeed.php';
         }
 
         if ($checkExists && !$isRollback) {
-            return __DIR__."/../templates/SimpleSeedWithCheckExists.php";
+            return __DIR__.'/../templates/SimpleSeedWithCheckExists.php';
         }
 
         if ($checkExists && $isRollback) {
-            return __DIR__."/../templates/SimpleSeedWithCheckExistsRollback.php";
+            return __DIR__.'/../templates/SimpleSeedWithCheckExistsRollback.php';
         }
 
-        return __DIR__."/../templates/SimpleSeedRollback.php";
+        return __DIR__.'/../templates/SimpleSeedRollback.php';
     }
 }

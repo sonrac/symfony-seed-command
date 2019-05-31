@@ -1,3 +1,5 @@
 composer.lock
 coverage/
 vendor
+/.htaccess
+/.php_cs.cache

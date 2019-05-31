@@ -67,9 +67,9 @@ final class Php71Config extends \PhpCsFixer\Config
             'include' => true,
             'is_null' => true,
             'linebreak_after_opening_tag' => true,
-            'list_syntax' => [
-                'syntax' => 'short',
-            ],
+//            'list_syntax' => [
+//                'syntax' => 'short',
+//            ],
             'lowercase_cast' => true,
             'mb_str_functions' => false,
             'magic_constant_casing' => true,
@@ -129,7 +129,7 @@ final class Php71Config extends \PhpCsFixer\Config
             'php_unit_dedicate_assert' => false,
             'php_unit_fqcn_annotation' => true,
             'php_unit_strict' => false,
-            'php_unit_test_class_requires_covers' => false,
+//            'php_unit_test_class_requires_covers' => false,
             'phpdoc_add_missing_param_annotation' => [
                 'only_untyped' => false,
             ],
@@ -197,7 +197,8 @@ final class Php71Config extends \PhpCsFixer\Config
 $config = new Php71Config();
 
 $config->getFinder()->in([
-    __DIR__
+    __DIR__."/src",
+    __DIR__."/tests",
 ]);
 
 return $config
