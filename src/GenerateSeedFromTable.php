@@ -110,16 +110,16 @@ class GenerateSeedFromTable extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $table           = $input->getOption('table');
-        $checkExists     = $input->getOption('check-exists');
-        $isRollback      = $input->getOption('rollback');
-        $outPath         = realpath($input->getOption('out-path'));
-        $namespace       = $input->getOption('namespace');
-        $className       = $input->getOption('classname');
-        $startID         = $input->getOption('start-id');
-        $endID           = $input->getOption('end-id');
+        $table = $input->getOption('table');
+        $checkExists = $input->getOption('check-exists');
+        $isRollback = $input->getOption('rollback');
+        $outPath = realpath($input->getOption('out-path'));
+        $namespace = $input->getOption('namespace');
+        $className = $input->getOption('classname');
+        $startID = $input->getOption('start-id');
+        $endID = $input->getOption('end-id');
         $rollbackColumns = $input->getOption('rollback-columns') ?: [];
-        $checkColumns    = $input->getOption('check-columns') ?: [];
+        $checkColumns = $input->getOption('check-columns') ?: [];
 
         if (!is_readable($outPath)) {
             throw new \InvalidArgumentException('Path does not readable or does not exists');
@@ -133,16 +133,16 @@ class GenerateSeedFromTable extends Command
                                             ->createSchema()
                                             ->getTable($table);
 
-        /** @var \Doctrine\DBAL\Schema\Index|null $columns */
+        /* @var \Doctrine\DBAL\Schema\Index|null $columns */
         $this->primaryKey = $tableDefinition->getPrimaryKey();
 
         $rolBackTemplate = '';
-        $checkTemplate   = '';
+        $checkTemplate = '';
 
         if ($this->primaryKey) {
             $columns = $this->primaryKey->getColumns();
             foreach ($columns as $index => $column) {
-                /** @var \Doctrine\DBAL\Schema\Identifier $column */
+                /* @var \Doctrine\DBAL\Schema\Identifier $column */
                 if ($isRollback && count($rollbackColumns) == 0) {
                     $rolBackTemplate .= (empty($rolBackTemplate) ? "\n" : '').
                                           "            \"`{$column}`\" => \$data[\"$column\"],".
@@ -161,7 +161,7 @@ class GenerateSeedFromTable extends Command
         $rolBackTemplate .= empty($rolBackTemplate) ? '' : "\n        ";
         $checkTemplate .= empty($checkTemplate) ? '' : "\n        ";
 
-        $templateName   = $this->getTemplate($checkExists, $isRollback);
+        $templateName = $this->getTemplate($checkExists, $isRollback);
         $templateString = file_get_contents($templateName);
         $templateString = str_replace(
             [
@@ -200,8 +200,8 @@ class GenerateSeedFromTable extends Command
             $where['end_id'] = $endID;
         }
 
-        $offset       = 0;
-        $limit        = 30;
+        $offset = 0;
+        $limit = 30;
         $dataTemplate = '';
         while (true) {
             $data = $this->getNextData($table, $limit, $offset, $where);
@@ -248,7 +248,7 @@ class GenerateSeedFromTable extends Command
                     $query->andWhere("$column >= :start_{$count}")
                           ->setParameter(":start_{$count}", $data[$count]);
                 }
-                ++$count;
+                $count++;
             }
         }
 
@@ -261,7 +261,7 @@ class GenerateSeedFromTable extends Command
                     $query->andWhere("$column <= :end_{$count}")
                           ->setParameter(":end_{$count}", $data[$count]);
                 }
-                ++$count;
+                $count++;
             }
         }
 
