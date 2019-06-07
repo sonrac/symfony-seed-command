@@ -184,8 +184,6 @@ class GenerateSeedFromTable extends Command
         );
 
         file_put_contents($outPath."/{$className}.php", $templateString);
-
-        require_once $outPath."/{$className}.php";
     }
 
     /**
