@@ -44,7 +44,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
     public function run(QueryBuilder $builder, Connection $connection)
     {
         $this->insertedData = [];
-        $this->skippedData = [];
+        $this->skippedData  = [];
 
         $data = $this->getData();
 
@@ -75,6 +75,29 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
         }
 
         return true;
+    }
+
+    /**
+     * Get exists data in table.
+     *
+     * @param \Doctrine\DBAL\Connection $connection
+     *
+     * @return array
+     */
+    protected function getExistsData(Connection $connection)
+    {
+        $queryBuilder = $connection->createQueryBuilder();
+        $checkColumns = $this->getBatchData($this->getData());
+        $columnNames  = array_keys($checkColumns);
+        $queryBuilder->select($columnNames);
+
+        foreach ($checkColumns as $name => $values) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->in($name, $values)
+            );
+        }
+
+        return $queryBuilder->execute()->fetchAll();
     }
 
     /**
@@ -117,5 +140,31 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
         }
 
         return $where;
+    }
+
+    /**
+     * Get batch data for search.
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
+    private function getBatchData($fields)
+    {
+        $params = [];
+
+        foreach ($fields as $nextColumn) {
+            $whereFields = $this->getWhereForRow($nextColumn);
+
+            foreach ($whereFields as $name => $value) {
+                if (!isset($params[$name])) {
+                    $params[$name] = [];
+                }
+
+                $params[$name][] = $value;
+            }
+        }
+
+        return $params;
     }
 }

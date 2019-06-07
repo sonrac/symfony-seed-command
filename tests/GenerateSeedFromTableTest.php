@@ -33,54 +33,54 @@ class GenerateSeedFromTableTest extends TestCase
 
         $schemaManagerMock = $this->getMockBuilder(MySqlSchemaManager::class)
                                   ->disableOriginalConstructor()
-                                  ->setMethods(["createSchema"])
+                                  ->setMethods(['createSchema'])
                                   ->getMock();
 
         $connection->expects($this->any())
-                   ->method("getSchemaManager")
+                   ->method('getSchemaManager')
                    ->willReturn($schemaManagerMock);
 
         $schemaMock = $this->getMockBuilder(Schema::class)
                            ->disableOriginalConstructor()
-                           ->setMethods(["getTable"])
+                           ->setMethods(['getTable'])
                            ->getMock();
         $table      = $this->getMockBuilder(Table::class)
                            ->disableOriginalConstructor()
-                           ->setMethods(["getPrimaryKey"])
+                           ->setMethods(['getPrimaryKey'])
                            ->getMock();
 
         $index = $this->getMockBuilder(Index::class)
                       ->disableOriginalConstructor()
-                      ->setMethods(["getColumns"])
+                      ->setMethods(['getColumns'])
                       ->getMock();
 
         $index->expects($this->any())
-              ->method("getColumns")
-              ->willReturn(["id"]);
+              ->method('getColumns')
+              ->willReturn(['id']);
 
         $table->expects($this->any())
-              ->method("getPrimaryKey")
+              ->method('getPrimaryKey')
               ->willReturn($index);
 
         $schemaMock->expects($this->any())
-                   ->method("getTable")
+                   ->method('getTable')
                    ->willReturn($table);
 
         $schemaManagerMock->expects($this->any())
-                          ->method("createSchema")
+                          ->method('createSchema')
                           ->willReturn($schemaMock);
 
         $methods      = [
-            "setFirstResult",
-            "setMaxResults",
-            "from",
-            "select",
-            "andWhere",
-            "setParameter",
+            'setFirstResult',
+            'setMaxResults',
+            'from',
+            'select',
+            'andWhere',
+            'setParameter',
         ];
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)
                              ->disableOriginalConstructor()
-                             ->setMethods(array_merge($methods, ["execute"]))
+                             ->setMethods(array_merge($methods, ['execute']))
                              ->getMock();
 
         foreach ($methods as $method) {
@@ -91,40 +91,40 @@ class GenerateSeedFromTableTest extends TestCase
 
         $statement = $this->getMockBuilder(Statement::class)
                           ->disableOriginalConstructor()
-                          ->setMethods(["fetchAll"])
+                          ->setMethods(['fetchAll'])
                           ->getMock();
 
         if ($expectFetch) {
             $statement->expects($this->at(0))
-                      ->method("fetchAll")
+                      ->method('fetchAll')
                       ->willReturn([
                           [
-                              "id"       => 1,
-                              "username" => "sonrac",
-                              "password" => "sonrac_password",
+                              'id'       => 1,
+                              'username' => 'sonrac',
+                              'password' => 'sonrac_password',
                           ],
                       ]);
 
             $statement->expects($this->atLeast(1))
-                      ->method("fetchAll")
+                      ->method('fetchAll')
                       ->willReturn([]);
         }
 
         $statementEmpty = $this->getMockBuilder(Statement::class)
                           ->disableOriginalConstructor()
-                          ->setMethods(["fetchAll"])
+                          ->setMethods(['fetchAll'])
                           ->getMock();
 
         $statementEmpty->expects($this->any())
-                  ->method("fetchAll")
+                  ->method('fetchAll')
                   ->willReturn([]);
 
         $queryBuilder->expects($this->any())
-                     ->method("execute")
+                     ->method('execute')
                      ->willReturn($statement);
 
         $connection->expects($this->any())
-                   ->method("createQueryBuilder")
+                   ->method('createQueryBuilder')
                    ->willReturn($queryBuilder);
 
         return $connection;
@@ -149,12 +149,12 @@ class GenerateSeedFromTableTest extends TestCase
     ) {
         $input = $this->getMockBuilder(ArrayInput::class)
                       ->disableOriginalConstructor()
-                      ->setMethods(["getOption"])
+                      ->setMethods(['getOption'])
                       ->getMock();
 
         foreach (func_get_args() as $index => $arg) {
             $input->expects($this->at($index))
-                  ->method("getOption")
+                  ->method('getOption')
                   ->willReturn($arg);
         }
 
@@ -166,25 +166,25 @@ class GenerateSeedFromTableTest extends TestCase
         $command = $this->getCommand();
 
         $input  = $this->getInputInterface(
-            "test",
+            'test',
             false,
             false,
-            __DIR__."/out",
-            "Tests\\Seed",
-            "SeedClass",
+            __DIR__.'/out',
+            'Tests\\Seed',
+            'SeedClass',
             null,
             null,
             null,
             null
         );
-        $method = new \ReflectionMethod($command, "execute");
+        $method = new \ReflectionMethod($command, 'execute');
         $method->setAccessible(true);
         $method->invoke($command, $input, new ConsoleOutput());
 
-        $this->assertFileExists(__DIR__."/out/SeedClass.php");
-        $content = file_get_contents(__DIR__."/out/SeedClass.php");
+        $this->assertFileExists(__DIR__.'/out/SeedClass.php');
+        $content = file_get_contents(__DIR__.'/out/SeedClass.php');
 
-        $this->assertContains("return \"test\";", $content);
+        $this->assertContains('return "test";', $content);
         $str = <<<EOL
         return [
             [
@@ -203,18 +203,18 @@ EOL;
         $command = $this->getCommand(false);
 
         $input  = $this->getInputInterface(
-            "test",
+            'test',
             false,
             false,
-            "/1/2/3/4/5/6/6/7/78/",
-            "Tests\\Seed",
-            "SeedClass",
+            '/1/2/3/4/5/6/6/7/78/',
+            'Tests\\Seed',
+            'SeedClass',
             null,
             null,
             null,
             null
         );
-        $method = new \ReflectionMethod($command, "execute");
+        $method = new \ReflectionMethod($command, 'execute');
         $method->setAccessible(true);
         if (method_exists($this, 'setExpectedException')) {
             $this->setExpectedException(\InvalidArgumentException::class);
@@ -229,18 +229,18 @@ EOL;
         $command = $this->getCommand(false);
 
         $input  = $this->getInputInterface(
-            "test",
+            'test',
             false,
             false,
-            __DIR__."/out",
-            "Tests\\Seed",
-            "",
+            __DIR__.'/out',
+            'Tests\\Seed',
+            '',
             null,
             null,
             null,
             null
         );
-        $method = new \ReflectionMethod($command, "execute");
+        $method = new \ReflectionMethod($command, 'execute');
         $method->setAccessible(true);
         if (method_exists($this, 'setExpectedException')) {
             $this->setExpectedException(\InvalidArgumentException::class);
