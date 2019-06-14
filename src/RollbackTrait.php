@@ -14,7 +14,7 @@ trait RollbackTrait
      */
     public function down(Connection $connection)
     {
-        $data = $this->getDeleteFields($this->getData());
+        $data = $this->getData();
 
         $queryBuilder = $connection->createQueryBuilder()
             ->delete($this->getTable());
@@ -25,7 +25,8 @@ trait RollbackTrait
             }
 
             $expressions = [];
-            foreach ($nextRow as $column => $value) {
+            $nextRowWhere = $this->getDeleteFields($nextRow);
+            foreach ($nextRowWhere as $column => $value) {
                 $columnAlias = str_replace('`', '', $column).'_'.$index;
                 $expressions[] = $queryBuilder->expr()->eq($column, ':'.$columnAlias);
                 $queryBuilder->setParameter($columnAlias, $value);
