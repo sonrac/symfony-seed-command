@@ -20,8 +20,8 @@ class GenerateSeedFromTableTest extends TestCase
     public function getConnectionMock($expectFetch = true)
     {
         $configuration = $this->getMockBuilder(Configuration::class)->getMock();
-        $driver        = $this->getMockBuilder(Driver::class)->getMock();
-        $connection    = $this->getMockBuilder("Doctrine\DBAL\Connection")
+        $driver = $this->getMockBuilder(Driver::class)->getMock();
+        $connection = $this->getMockBuilder("Doctrine\DBAL\Connection")
                               ->setConstructorArgs(
                                   [
                                       [],
@@ -44,7 +44,7 @@ class GenerateSeedFromTableTest extends TestCase
                            ->disableOriginalConstructor()
                            ->setMethods(['getTable'])
                            ->getMock();
-        $table      = $this->getMockBuilder(Table::class)
+        $table = $this->getMockBuilder(Table::class)
                            ->disableOriginalConstructor()
                            ->setMethods(['getPrimaryKey'])
                            ->getMock();
@@ -70,7 +70,7 @@ class GenerateSeedFromTableTest extends TestCase
                           ->method('createSchema')
                           ->willReturn($schemaMock);
 
-        $methods      = [
+        $methods = [
             'setFirstResult',
             'setMaxResults',
             'from',
@@ -165,7 +165,7 @@ class GenerateSeedFromTableTest extends TestCase
     {
         $command = $this->getCommand();
 
-        $input  = $this->getInputInterface(
+        $input = $this->getInputInterface(
             'test',
             false,
             false,
@@ -185,7 +185,7 @@ class GenerateSeedFromTableTest extends TestCase
         $content = file_get_contents(__DIR__.'/out/SeedClass.php');
 
         $this->assertContains('return "test";', $content);
-        $str = <<<EOL
+        $str = <<<'EOL'
         return [
             [
                 '`id`' => "1",
@@ -202,7 +202,7 @@ EOL;
     {
         $command = $this->getCommand(false);
 
-        $input  = $this->getInputInterface(
+        $input = $this->getInputInterface(
             'test',
             false,
             false,
@@ -228,7 +228,7 @@ EOL;
     {
         $command = $this->getCommand(false);
 
-        $input  = $this->getInputInterface(
+        $input = $this->getInputInterface(
             'test',
             false,
             false,
