@@ -79,16 +79,17 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
             return [];
         }
 
-        $queryBuilder->select(count($selectFields) ? $selectFields : array_keys($this->getWhereForRow(current($data))))
+        $selectFields = count($selectFields) ? $selectFields : array_keys($this->getWhereForRow(current($data)));
+        $queryBuilder->select($selectFields)
                      ->from($this->getTable());
 
         $select = [];
         foreach ($data as $index => $nextRow) {
             $expressions = [];
-            foreach ($nextRow as $column => $value) {
+            foreach ($selectFields as $column) {
                 $columnAlias = str_replace('`', '', $column).'_'.$index;
                 $expressions[] = $queryBuilder->expr()->eq($column, ':'.$columnAlias);
-                $queryBuilder->setParameter($columnAlias, $value);
+                $queryBuilder->setParameter($columnAlias, $nextRow[$column]);
                 $select[$column] = $column;
             }
             $queryBuilder->orWhere(call_user_func_array([$queryBuilder->expr(), 'andX'], $expressions));
