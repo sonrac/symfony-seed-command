@@ -87,7 +87,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
             $expressions = [];
             foreach ($nextRow as $column => $value) {
                 $columnAlias = str_replace('`', '', $column).'_'.$index;
-                $expressions[] = $queryBuilder->expr()->eq($column, $columnAlias);
+                $expressions[] = $queryBuilder->expr()->eq($column, ':'.$columnAlias);
                 $queryBuilder->setParameter($columnAlias, $value);
                 $select[$column] = $column;
             }
