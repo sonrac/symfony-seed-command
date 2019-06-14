@@ -306,7 +306,8 @@ class GenerateSeedFromTable extends Command
                         ++$offsetSecond;
                     }
                 }
-                $result .= (empty($result) ? '' : ".\n".str_repeat(' ', $countSymbols - mb_strlen($columnName)))."\"$resultNextLine\"";
+                $result .= (empty($result) ? '' :
+                        ".\n".str_repeat(' ', $countSymbols - mb_strlen($columnName)))."\"$resultNextLine\"";
                 $start += $offset + $maxInLine;
             }
 

@@ -15,7 +15,7 @@
   },
   "scripts": {
     "full-check": "php FullCheckProject.php",
-    "fix-code": "php-cs-fixer fix src; php-cs-fixer fix tests;",
+    "fix-review": "php-cs-fixer fix src; php-cs-fixer fix tests;",
     "test": "phpunit --color=never --coverage-text",
     "test-coverage-html": "phpunit --coverage-html coverage",
     "review": "phpcs",
