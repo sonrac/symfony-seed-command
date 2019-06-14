@@ -26,8 +26,9 @@ trait RollbackTrait
 
             $expressions = [];
             foreach ($nextRow as $column => $value) {
-                $expressions[] = $queryBuilder->expr()->eq($column, ":{$column}_{$index}");
-                $queryBuilder->setParameter("{$column}_{$index}", $value);
+                $columnAlias = str_replace('`', '', $column).'_'.$index;
+                $expressions[] = $queryBuilder->expr()->eq($column, $columnAlias);
+                $queryBuilder->setParameter($columnAlias, $value);
                 $select[$column] = $column;
             }
             $queryBuilder->orWhere(call_user_func_array([$queryBuilder->expr(), 'andX'], $expressions));

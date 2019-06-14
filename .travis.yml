@@ -4,7 +4,6 @@ php:
   - 5.5.9
   - hhvm
   - 7.1
-  - 7.2
 allow_failure:
   - hhvm
 matrix:
