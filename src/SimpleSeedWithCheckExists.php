@@ -44,9 +44,9 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
     public function run(QueryBuilder $builder, Connection $connection)
     {
         $this->insertedData = [];
-        $this->skippedData  = [];
+        $this->skippedData = [];
 
-        $data       = $this->getData();
+        $data = $this->getData();
         $existsData = $this->getExistsData($connection);
 
         foreach ($data as $datum) {
