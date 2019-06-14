@@ -32,7 +32,7 @@ trait TesterTrait
     protected function createTable()
     {
         $table = new Table('users');
-        $table->addColumn('id', Type::INTEGER);
+        $table->addColumn('id', Type::INTEGER)->setAutoincrement(true);
         $table->addColumn('username', Type::STRING)
             ->setLength(255)
             ->setNotnull(true);

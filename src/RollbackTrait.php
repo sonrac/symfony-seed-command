@@ -14,7 +14,7 @@ trait RollbackTrait
      */
     public function down(Connection $connection)
     {
-        $data = $this->getData();
+        $data = $this->getDeleteFields($this->getData());
 
         $queryBuilder = $connection->createQueryBuilder()
             ->delete($this->getTable());

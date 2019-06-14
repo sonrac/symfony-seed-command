@@ -43,6 +43,14 @@ class SimpleSeedExistsTest extends TestCase
 
         $this->assertEquals(self::getData(), $command->getInsertedData());
         $this->assertEquals([], $command->getSkippedData());
+
+        $this->assertTrue($command->run($this->connection->createQueryBuilder(), $this->connection));
+
+        $this->assertEquals(2, $this->connection->createQueryBuilder()
+            ->select('count(id)')->from('users', 'users')->execute()->fetch(\PDO::FETCH_COLUMN));
+
+        $this->assertEquals(self::getData(), $command->getSkippedData());
+        $this->assertEquals([], $command->getInsertedData());
     }
 
     /**

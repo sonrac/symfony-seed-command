@@ -93,7 +93,6 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
             }
             $queryBuilder->orWhere(call_user_func_array([$queryBuilder->expr(), 'andX'], $expressions));
         }
-        $queryBuilder->select(array_keys($select));
 
         return $queryBuilder->execute()->fetchAll();
     }
@@ -146,7 +145,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
                     break;
                 }
 
-                $result = $result && $nextItem[$column] === $value;
+                $result = $result && $nextItem[$column] == $value;
             }
 
             if ($result) {
