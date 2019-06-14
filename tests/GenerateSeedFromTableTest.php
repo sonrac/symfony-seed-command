@@ -19,8 +19,8 @@ class GenerateSeedFromTableTest extends TestCase
 {
     public function getConnectionMock($expectFetch = true)
     {
-        $configuration = $this->getMock(Configuration::class);
-        $driver        = $this->getMock(Driver::class);
+        $configuration = $this->getMockBuilder(Configuration::class)->getMock();
+        $driver        = $this->getMockBuilder(Driver::class)->getMock();
         $connection    = $this->getMockBuilder("Doctrine\DBAL\Connection")
                               ->setConstructorArgs(
                                   [

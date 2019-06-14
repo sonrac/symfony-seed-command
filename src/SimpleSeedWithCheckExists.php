@@ -46,27 +46,11 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
         $this->insertedData = [];
         $this->skippedData  = [];
 
-        $data = $this->getData();
+        $data       = $this->getData();
+        $existsData = $this->getExistsData($connection);
 
         foreach ($data as $datum) {
-            $whereData = $this->getWhereForRow($datum);
-
-            $checkInsertAllow = true;
-
-            if (is_array($whereData) && count($whereData)) {
-                $builder = $connection->createQueryBuilder()
-                        ->select(['count('.$this->countField.')'])
-                        ->from($this->getTable(), $this->getTable())
-                        ->where($this->prepeareWhere($whereData));
-
-                foreach ($whereData as $name => $value) {
-                    $builder->setParameter($name, $value);
-                }
-
-                $checkInsertAllow = $builder->execute()->fetch(\PDO::FETCH_COLUMN) == 0;
-            }
-
-            if ($checkInsertAllow) {
+            if (!$this->findExisted($datum, $existsData)) {
                 $connection->insert($this->getTable(), $datum);
                 $this->insertedData[] = $datum;
             } else {
@@ -81,21 +65,34 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
      * Get exists data in table.
      *
      * @param \Doctrine\DBAL\Connection $connection
+     * @param array                     $selectFields
      *
      * @return array
      */
-    protected function getExistsData(Connection $connection)
+    protected function getExistsData(Connection $connection, $selectFields = [])
     {
         $queryBuilder = $connection->createQueryBuilder();
-        $checkColumns = $this->getBatchData($this->getData());
-        $columnNames  = array_keys($checkColumns);
-        $queryBuilder->select($columnNames);
 
-        foreach ($checkColumns as $name => $values) {
-            $queryBuilder->andWhere(
-                $queryBuilder->expr()->in($name, $values)
-            );
+        $data = $this->getData();
+
+        if (!count($data)) {
+            return [];
         }
+
+        $queryBuilder->select(count($selectFields) ? $selectFields : array_keys($this->getWhereForRow(current($data))))
+                     ->from($this->getTable());
+
+        $select = [];
+        foreach ($data as $index => $nextRow) {
+            $expressions = [];
+            foreach ($nextRow as $column => $value) {
+                $expressions[] = $queryBuilder->expr()->eq($column, ":{$column}_{$index}");
+                $queryBuilder->setParameter("{$column}_{$index}", $value);
+                $select[$column] = $column;
+            }
+            $queryBuilder->orWhere(call_user_func_array([$queryBuilder->expr(), 'andX'], $expressions));
+        }
+        $queryBuilder->select(array_keys($select));
 
         return $queryBuilder->execute()->fetchAll();
     }
@@ -131,40 +128,31 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
      */
     abstract protected function getWhereForRow($data);
 
-    public function prepeareWhere($data)
-    {
-        $where = '';
-
-        foreach ($data as $name => $value) {
-            $where .= (strlen($where) ? ' AND ' : '')." `$name` = :$name";
-        }
-
-        return $where;
-    }
-
     /**
-     * Get batch data for search.
+     * Find existed record.
      *
-     * @param array $fields
+     * @param array $row
+     * @param array $exists
      *
-     * @return array
+     * @return bool
      */
-    private function getBatchData($fields)
+    protected function findExisted($row, $exists)
     {
-        $params = [];
-
-        foreach ($fields as $nextColumn) {
-            $whereFields = $this->getWhereForRow($nextColumn);
-
-            foreach ($whereFields as $name => $value) {
-                if (!isset($params[$name])) {
-                    $params[$name] = [];
+        foreach ($exists as $nextItem) {
+            $result = true;
+            foreach ($row as $column => $value) {
+                if (!isset($nextItem[$column])) {
+                    break;
                 }
 
-                $params[$name][] = $value;
+                $result = $result && $nextItem[$column] === $value;
+            }
+
+            if ($result) {
+                return true;
             }
         }
 
-        return $params;
+        return false;
     }
 }

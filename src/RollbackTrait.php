@@ -16,28 +16,24 @@ trait RollbackTrait
     {
         $data = $this->getData();
 
-        $count = 0;
+        $queryBuilder = $connection->createQueryBuilder()
+            ->delete($this->getTable());
 
-        foreach ($data as $datum) {
-            if (!$this->checkDeleted($datum)) {
+        foreach ($data as $index => $nextRow) {
+            if (!$this->checkDeleted($nextRow)) {
                 continue;
             }
 
-            $query = $connection->createQueryBuilder()
-                ->delete($this->getTable());
-
-            $deleteData = $this->getDeleteFields($datum);
-            foreach ($deleteData as $name => $value) {
-                $query->andWhere("{$name} = :${name}")
-                    ->setParameter($name, $value);
+            $expressions = [];
+            foreach ($nextRow as $column => $value) {
+                $expressions[] = $queryBuilder->expr()->eq($column, ":{$column}_{$index}");
+                $queryBuilder->setParameter("{$column}_{$index}", $value);
+                $select[$column] = $column;
             }
-
-            $query->execute();
-
-            ++$count;
+            $queryBuilder->orWhere(call_user_func_array([$queryBuilder->expr(), 'andX'], $expressions));
         }
 
-        return $count > 0;
+        return $queryBuilder->execute() > 0;
     }
 
     /**
