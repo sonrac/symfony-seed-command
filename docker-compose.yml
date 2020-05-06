@@ -1,37 +1,7 @@
 version: "3.6"
 services:
-  fpm7.0:
-    image: sonrac/infomir-php:php-fpm-7.0
-    volumes:
-      - "./:/home/infomir/site"
-    environment:
-      - PROJECT_DIR_ROOT=/home/infomir/site
-      - COMPOSER_HOME=/tmp
-      - XDEBUG_ENABLE=1
-      - XDEBUG_CLI_ENABLE=1
-    working_dir: /home/infomir/site
-  fpm7.1:
-    image: sonrac/infomir-php:php-fpm-7.1
-    volumes:
-      - "./:/home/infomir/site"
-    environment:
-      - PROJECT_DIR_ROOT=/home/infomir/site
-      - COMPOSER_HOME=/tmp
-      - XDEBUG_ENABLE=1
-      - XDEBUG_CLI_ENABLE=1
-    working_dir: /home/infomir/site
   fpm7.2:
     image: sonrac/infomir-php:php-fpm-7.2
-    volumes:
-      - "./:/home/infomir/site"
-    environment:
-      - PROJECT_DIR_ROOT=/home/infomir/site
-      - COMPOSER_HOME=/tmp
-      - XDEBUG_ENABLE=1
-      - XDEBUG_CLI_ENABLE=1
-    working_dir: /home/infomir/site
-  fpm5.5.9:
-    image: sonrac/infomir-php:php-fpm-5.5.9
     volumes:
       - "./:/home/infomir/site"
     environment:

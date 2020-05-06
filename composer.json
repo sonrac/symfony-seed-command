@@ -4,8 +4,8 @@
   "type": "library",
   "require": {
     "ext-json": "*",
-    "php": ">=5.5",
-    "symfony/console": ">=2.3",
+    "php": ">=7.2",
+    "symfony/console": ">=4.3",
     "doctrine/dbal": ">=2.2.0"
   },
   "require-dev": {
