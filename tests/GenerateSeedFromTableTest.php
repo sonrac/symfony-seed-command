@@ -20,8 +20,8 @@ class GenerateSeedFromTableTest extends TestCase
     public function getConnectionMock($expectFetch = true)
     {
         $configuration = $this->getMockBuilder(Configuration::class)->getMock();
-        $driver = $this->getMockBuilder(Driver::class)->getMock();
-        $connection = $this->getMockBuilder("Doctrine\DBAL\Connection")
+        $driver        = $this->getMockBuilder(Driver::class)->getMock();
+        $connection    = $this->getMockBuilder("Doctrine\DBAL\Connection")
                               ->setConstructorArgs(
                                   [
                                       [],
@@ -184,7 +184,7 @@ class GenerateSeedFromTableTest extends TestCase
         $this->assertFileExists(__DIR__.'/out/SeedClass.php');
         $content = file_get_contents(__DIR__.'/out/SeedClass.php');
 
-        $this->assertContains('return "test";', $content);
+        $this->assertStringContainsString('return "test";', $content);
         $str = <<<'EOL'
         return [
             [
@@ -195,7 +195,7 @@ class GenerateSeedFromTableTest extends TestCase
         ];
 EOL;
 
-        $this->assertContains($str, $content);
+        $this->assertStringContainsString($str, $content);
     }
 
     public function testPathNotReadableException()

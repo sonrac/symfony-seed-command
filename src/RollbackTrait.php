@@ -24,10 +24,10 @@ trait RollbackTrait
                 continue;
             }
 
-            $expressions = [];
+            $expressions  = [];
             $nextRowWhere = $this->getDeleteFields($nextRow);
             foreach ($nextRowWhere as $column => $value) {
-                $columnAlias = str_replace('`', '', $column).'_'.$index;
+                $columnAlias   = str_replace('`', '', $column).'_'.$index;
                 $expressions[] = $queryBuilder->expr()->eq($column, ':'.$columnAlias);
                 $queryBuilder->setParameter($columnAlias, $value);
                 $select[$column] = $column;

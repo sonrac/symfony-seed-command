@@ -44,9 +44,9 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
     public function run(QueryBuilder $builder, Connection $connection)
     {
         $this->insertedData = [];
-        $this->skippedData = [];
+        $this->skippedData  = [];
 
-        $data = $this->getData();
+        $data       = $this->getData();
         $existsData = $this->getExistsData($connection);
 
         foreach ($data as $datum) {
@@ -87,7 +87,7 @@ abstract class SimpleSeedWithCheckExists extends SimpleSeed
         foreach ($data as $index => $nextRow) {
             $expressions = [];
             foreach ($selectFields as $column) {
-                $columnAlias = str_replace('`', '', $column).'_'.$index;
+                $columnAlias   = str_replace('`', '', $column).'_'.$index;
                 $expressions[] = $queryBuilder->expr()->eq($column, ':'.$columnAlias);
                 $queryBuilder->setParameter($columnAlias, $nextRow[$column]);
                 $select[$column] = $column;

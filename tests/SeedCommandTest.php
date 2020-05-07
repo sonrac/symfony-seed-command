@@ -150,7 +150,7 @@ class SeedCommandTest extends TestCase
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

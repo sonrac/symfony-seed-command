@@ -82,7 +82,7 @@ class SimpleSeedExistsTest extends TestCase
      *
      * @throws \Doctrine\DBAL\DBALException
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -96,7 +96,7 @@ class SimpleSeedExistsTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
