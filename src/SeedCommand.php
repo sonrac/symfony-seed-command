@@ -69,7 +69,7 @@ class SeedCommand extends Command
      * @throws \sonrac\SimpleSeed\SeedClassNotFoundException
      * @throws \ReflectionException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $class = $input->getOption('class');
         $rollbackOption = $input->getOption('rollback');
@@ -80,7 +80,7 @@ class SeedCommand extends Command
         $instance = new $class($this->connection);
 
         if ($isRollback) {
-            return $instance->down($this->connection);
+            return (int) $instance->down($this->connection);
         }
 
         return (int) $instance->run($this->connection->createQueryBuilder(), $this->connection);
