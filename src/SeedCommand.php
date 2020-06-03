@@ -71,9 +71,9 @@ class SeedCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $class          = $input->getOption('class');
+        $class = $input->getOption('class');
         $rollbackOption = $input->getOption('rollback');
-        $isRollback     = false !== $rollbackOption;
+        $isRollback = false !== $rollbackOption;
         $this->checkSeedClass($class, $isRollback);
 
         /** @var \sonrac\SimpleSeed\SeedInterface|\Tests\Stub\RollbackSeed $instance */
