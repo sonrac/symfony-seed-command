@@ -3,3 +3,4 @@ coverage/
 vendor
 /.htaccess
 /.php_cs.cache
+/.idea
