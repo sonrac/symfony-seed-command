@@ -83,7 +83,7 @@ class SeedCommand extends Command
             return $instance->down($this->connection);
         }
 
-        return (int) $instance->run($this->connection->createQueryBuilder(), $this->connection);
+        return $instance->run($this->connection->createQueryBuilder(), $this->connection) ? 0 : 127;
     }
 
     /**

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SilexPluginSettings">
+    <option name="containerDefinitionFileName" value="$PROJECT_DIR$/pimple.json" />
+  </component>
+</project>
